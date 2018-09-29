@@ -35,7 +35,7 @@ class UserController extends  Controller
     }
     public function demo()
     {
-        return ('hello word! adon');
+        return ('aaasdasd hello word! adon-enheng');
     }
 
 }
