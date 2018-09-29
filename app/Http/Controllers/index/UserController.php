@@ -33,6 +33,9 @@ class UserController extends  Controller
     {
         return view('frontend/user/self_info');
     }
-
+    public function demo()
+    {
+        return ('hello word! adon');
+    }
 
 }
