@@ -19,11 +19,10 @@
 					<div class="xian center"></div>
 				</div>
 				<div class="regist_main center">
-					<div class="username">用&nbsp;&nbsp;户&nbsp;&nbsp;名:&nbsp;&nbsp;<input class="shurukuang" type="text" name="username" id="name"  value=""  placeholder="请输入邮箱或手机号"/><span>请不要输入汉字</span></div>
-					<div class="username">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;&nbsp;<input class="shurukuang" type="password" name="password" id="pwd" value="" placeholder="请输入你的密码"/><span>请输入6位以上字符</span></div>
+					<div class="username">用&nbsp;&nbsp;户&nbsp;&nbsp;名:&nbsp;&nbsp;<input class="shurukuang" type="text" name="username" id="name"  value=""  placeholder="请输入邮箱或手机号"/><span class="n_info">请不要输入汉字</span></div>
+					<div class="username">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;&nbsp;<input class="shurukuang" type="password" name="password" id="pwd" value="" placeholder="请输入你的密码"/><span class="p_info">请输入6位以上字符</span></div>
 					
-					<div class="username">确认密码:&nbsp;&nbsp;<input class="shurukuang" type="password" name="repassword" id="repwd" value="" placeholder="请确认你的密码"/><span>两次密码要输入一致哦</span></div>
-					<div class="username">手&nbsp;&nbsp;机&nbsp;&nbsp;号:&nbsp;&nbsp;<input class="shurukuang" type="text" name="mobile" placeholder="请填写正确的手机号"/><span>填写下手机号吧，方便我们联系您！</span></div>
+					<div class="username">确认密码:&nbsp;&nbsp;<input class="shurukuang" type="password" name="repassword" id="repwd" value="" placeholder="请确认你的密码"/><span class="rp_info">两次密码要输入一致哦</span></div>
 					<div class="username">
 						<div class="left fl">验&nbsp;&nbsp;证&nbsp;&nbsp;码:&nbsp;&nbsp;<input class="yanzhengma" type="text" name="verificode" placeholder="请输入验证码"/></div>
 
@@ -49,16 +48,35 @@
 </html>
 <script src="/js/jquery-1.7.2.min.js"></script>
 <script>
-    // $("#name").blur(function(){
-	 //    var name = $(this).val();
-	 //    alert(name);
-    // })
-    // $("#pwd").blur(function(){
-    //     var pwd = $(this).val();
-    //     alert(pwd);
-    // })
-    // $("#repwd").blur(function(){
-    //     var repwd = $(this).val();
-    //     alert(repwd);
-    // })
+    $("#name").blur(function(){
+	    var name = $(this).val();
+        var regEmail = /^[A-Za-z0-9]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        var regTel = /^[\d]{11}$/;
+        if (regEmail.test(name)) {
+            $('.n_info').text('用户邮箱注册');
+        } else if (regTel.test(name)) {
+            $('.n_info').text('用户手机号码注册');
+        } else {
+            $('.n_info').text('验证失败');return false;
+        }
+    })
+    $("#pwd").blur(function(){
+        var pwd = $(this).val();
+        var regPwd = /^[a-zA-Z\d_\.\/]{6,}$/;
+        if (regPwd.test(pwd)) {
+            $('.p_info').text('密码验证成功');return true;
+        } else {
+            $('.p_info').text('密码验证失败');return false;
+        }
+    })
+    $("#repwd").blur(function(){
+        var repwd = $(this).val();
+        var pwd = $("#pwd").val();
+        var regPwd = /^[a-zA-Z\d_\.\/]{6,}$/;
+        if (regPwd.test(repwd) && repwd == pwd) {
+            $('.rp_info').text('两次密码相同');return true;
+        } else {
+            $('.rp_info').text('两次密码要输入一致哦');return false;
+        }
+    })
 </script>
