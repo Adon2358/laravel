@@ -37,11 +37,17 @@ class LoginModel extends Model
      public function m_login($res)
      {
          $username = $res['username'];
-
+         $password = $res['password'];
          $data = DB::table($this->table)->where('username',$username)->first();
          if($data)
          {
-             return 1;
+             if($password == $data->password)
+             {
+                 return 1;
+             } else {
+                 return 3;
+             }
+
          }else{
              return 2;
          }

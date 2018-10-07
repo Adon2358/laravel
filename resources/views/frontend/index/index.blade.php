@@ -16,17 +16,13 @@
 			<a href="./index.html" target="_blank"><div class="logo fl"></div></a>
 			<a href=""><div class="ad_top fl"></div></a>
 			<div class="nav fl">
+
 				<ul>
-					<li><a href="{{url('index/list')}}" target="_blank">小米手机</a></li>
-					<li><a href="">红米</a></li>
-					<li><a href="">平板·笔记本</a></li>
-					<li><a href="">电视</a></li>
-					<li><a href="">盒子·影音</a></li>
-					<li><a href="">路由器</a></li>
-					<li><a href="">智能硬件</a></li>
-					<li><a href="">服务</a></li>
-					<li><a href="">社区</a></li>
+					@foreach($navigation as $k=>$v)
+					<li><a href="{{$v['d_url']}}" target="_blank">{{$v['d_name']}}</a></li>
+					@endforeach
 				</ul>
+
 			</div>
 			<div class="search fr">
 				<form action="" method="post">

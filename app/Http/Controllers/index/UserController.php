@@ -30,16 +30,32 @@ class UserController extends  Controller
             'username' => $sign['username'],
             'password' => $sign['password'],
             'repassword' => $sign['repassword'],
-            'mobile' => $sign['mobile'],
         ];
-        $service = new LoginService();
-        $res = $service->s_rigster($arr);
-
-        if($res == 2)
+        if($arr)
         {
-            return "此用户已注册";
-        } else {
-            return "注册成功";
+            $pregEmail = '/^[A-Za-z0-9]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/';
+            $pregPwd = '/^[a-zA-Z\d_\.\/]{8,}$/';
+            $pregTel = '/^[\d]{11}$/';
+            if (preg_match($pregEmail,$arr['username'])) {
+                //用户通过邮箱注册
+                echo "用户通过邮箱注册</br>";
+            } else if (preg_match($pregTel,$arr['username'])) {
+                //用户通过手机号码注册
+                echo "用户通过手机号码注册</br>";
+            } else {
+                return "手机号或邮箱注册</br>";
+            }
+            $service = new LoginService();
+            $res = $service->s_rigster($arr);
+
+            if($res == 2)
+            {
+                return "此用户已注册";
+            } else {
+                return "注册成功";
+            }
+        }else{
+            return "不符合条件";
         }
     }
     /*
@@ -62,11 +78,14 @@ class UserController extends  Controller
         $service = new LoginService();
         $res = $service->s_login($arr);
 
-        if($res == 1)
-        {
+        if($res == 1) {
             return "登录成功";
-        } else {
+        }
+        if($res == 2){
             return "登录失败";
+        }
+        if($res == 3) {
+            return "密码错误";
         }
     }
     /*

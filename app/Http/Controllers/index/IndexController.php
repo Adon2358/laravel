@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
+use App\Service\IndexService;
 
 class IndexController extends  Controller
 {
@@ -11,7 +12,10 @@ class IndexController extends  Controller
      */
     public function index()
     {
-        return view('frontend/index/index');
+        $service = new IndexService();
+        $navigation  = $service->s_index();
+
+        return view('frontend/index/index',['navigation'=>$navigation]);
     }
     /*
      * 列表页
