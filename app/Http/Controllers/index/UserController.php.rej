@@ -1,0 +1,9 @@
+diff a/app/Http/Controllers/index/UserController.php b/app/Http/Controllers/index/UserController.php	(rejected hunks)
+@@ -35,7 +35,6 @@
+     }
+     public function demo()
+     {
+-        return ('hello word! adon-enheng');
+         return ('aaasdasd hello word! adon-enheng');
+     }
+ 
