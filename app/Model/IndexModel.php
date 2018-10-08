@@ -14,8 +14,10 @@ class IndexModel extends Model
             $navigation = DB::table('navigation')->get()->toarray();
             $shop = DB::table('shop')->where('status',1)->get()->toarray();
             $shop1 = DB::table('shop')->where('status',2)->get()->toarray();
+            $g_type = DB::table('goods_type')->get()->toarray();
             $navigation['shop'] = $shop;
             $navigation['shop1'] = $shop1;
+            $navigation['g_type'] = $g_type;
             $str = json_encode($navigation);
             Redis::set('data',$str);
             $data = Redis::get('data');
