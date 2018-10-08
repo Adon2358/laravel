@@ -14,8 +14,15 @@ class IndexController extends  Controller
     {
         $service = new IndexService();
         $navigation  = $service->s_index();
-
-        return view('frontend/index/index',['navigation'=>$navigation]);
+        $shop = $navigation['shop'];
+        $shop1 = $navigation['shop1'];
+        unset($navigation['shop']);
+        unset($navigation['shop1']);
+        return view('frontend/index/index',[
+                                                'navigation'=> $navigation,
+                                                'shop' => $shop,
+                                                'shop1' => $shop1,
+                                               ]);
     }
     /*
      * 列表页

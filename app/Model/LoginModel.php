@@ -1,8 +1,9 @@
 <?php
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use DB;
+use Illuminate\Database\Eloquent\Model;
+use App\Model\LogModel;
 
 class LoginModel extends Model
 {
@@ -43,6 +44,8 @@ class LoginModel extends Model
          {
              if($password == $data->password)
              {
+                 $logModel = new LogModel();
+                 $logModel->insert_log();
                  return 1;
              } else {
                  return 3;

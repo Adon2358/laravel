@@ -45,6 +45,7 @@ class UserController extends  Controller
             } else {
                 return "手机号或邮箱注册</br>";
             }
+            $arr['pregEmail'] = $pregEmail;
             $service = new LoginService();
             $res = $service->s_rigster($arr);
 

@@ -13,7 +13,7 @@ class IndexService
         $model = new IndexModel();
         $data = $model->m_index();
         $res = json_decode($data,true);
-
+//        var_dump($res);die;
         return $res;
     }
 }
