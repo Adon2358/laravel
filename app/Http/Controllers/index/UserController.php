@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Index;
 use App\Http\Controllers\Controller;
 use App\Service\LoginService;
 use Illuminate\Http\Request;
-
+use Session;
 
 class UserController extends  Controller
 {
@@ -65,12 +65,12 @@ class UserController extends  Controller
                 $res = $service->s_rigster($arr);
 
                 if($res == 2) {
-                    return "此用户已注册";
+                    return redirect('/prompt')->with(['message'=>'此用户已注册！','url' =>'user/register', 'jumpTime'=>3,'status'=>false]);
                 } else {
-                    return "注册成功";
+                    return redirect('/prompt')->with(['message'=>'注册成功！','url' =>'user/login', 'jumpTime'=>3,'status'=>true]);
                 }
             }else{
-                return "不符合条件";
+                return redirect('/prompt')->with(['message'=>'不符合条件！','url' =>'user/register', 'jumpTime'=>3,'status'=>false]);
             }
         }
 
@@ -98,12 +98,11 @@ class UserController extends  Controller
             $res = $service->s_login($arr);
 
             if($res == 1) {
-//                dump(session::put('username',$sign['username']));
-//                    dd(Session::get('username'));
-                return redirect('index/index');
+                Session()->put('username',$sign['username']);
+                return redirect('/prompt')->with(['message'=>'登录成功！','url' =>'index/index', 'jumpTime'=>3,'status'=>true]);
             }
             if($res == 2){
-                return "登录失败";
+                return redirect('/prompt')->with(['message'=>'登录失败！','url' =>'user/login', 'jumpTime'=>3,'status'=>false]);
             }
             if($res == 3) {
                 return "密码错误";
