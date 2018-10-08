@@ -14,7 +14,7 @@ class IndexModel extends Model
             $navigation = DB::table('navigation')->get()->toarray();
             $shop = DB::table('shop')->where('status',1)->get()->toarray();
             $shop1 = DB::table('shop')->where('status',2)->get()->toarray();
-            $g_type = DB::table('goods_type')->get()->toarray();
+            $g_type = DB::table('goods_type')->join('goods','goods_type.t_id','=','goods.t_id')->get()->toarray();
             $navigation['shop'] = $shop;
             $navigation['shop1'] = $shop1;
             $navigation['g_type'] = $g_type;
@@ -24,7 +24,7 @@ class IndexModel extends Model
         }else {
             $data = Redis::get('data');
         }
-//        Redis::del('data');
+        Redis::del('data');
 
         return $data;
     }

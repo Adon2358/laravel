@@ -51,8 +51,8 @@
 								<div>
 									<div class="xuangou_left fl">
 										<a href="">
-											<div class="img fl"><img src="./image/xm5Splus.jpg" alt=""></div>
-											<span class="fl">小米5s Plus</span>
+											<div class="img fl"><img src="{{$value['g_img']}}" alt=""></div>
+											<span class="fl">{{$value['g_name']}}</span>
 											<div class="clear"></div>
 										</a>
 									</div>
