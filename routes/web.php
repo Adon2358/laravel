@@ -46,10 +46,8 @@ Route::post('user/logindo','Index\UserController@logindo');
 //个人中心
 Route::get('user/self_info','Index\UserController@self_info');
 
+
 /*
- * LoginController
+ * 跳转提示路由
  */
-//注册
-Route::get('login/register','Index\LoginController@register');
-//处理注册
-Route::post('login/registerdo','Index\LoginController@registerdo');
+Route::resource('/prompt','PromptController');
