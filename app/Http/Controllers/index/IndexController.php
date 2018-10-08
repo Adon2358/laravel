@@ -16,12 +16,15 @@ class IndexController extends  Controller
         $navigation  = $service->s_index();
         $shop = $navigation['shop'];
         $shop1 = $navigation['shop1'];
+        $g_type = $navigation['g_type'];
+        unset($navigation['g_type']);
         unset($navigation['shop']);
         unset($navigation['shop1']);
         return view('frontend/index/index',[
                                                 'navigation'=> $navigation,
                                                 'shop' => $shop,
                                                 'shop1' => $shop1,
+                                                'g_type' => $g_type,
                                                ]);
     }
     /*
