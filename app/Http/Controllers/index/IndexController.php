@@ -17,6 +17,7 @@ class IndexController extends  Controller
         $shop = $navigation['shop'];
         $shop1 = $navigation['shop1'];
         $g_type = $navigation['g_type'];
+//        var_dump($g_type);die;
         unset($navigation['g_type']);
         unset($navigation['shop']);
         unset($navigation['shop1']);
