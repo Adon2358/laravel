@@ -8,7 +8,7 @@
 
 	</head>
 	<body>
-		<form action="{{url('user/registerdo')}}" method="post">
+		<form action="{{url('user/registerDo')}}" method="post">
 			{{csrf_field()}}
 		<div class="regist">
 			<div class="regist_center">

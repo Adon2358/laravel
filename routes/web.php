@@ -38,13 +38,18 @@ Route::get('cart/order','Index\CartController@order');
 //注册
 Route::get('user/register','Index\UserController@register');
 //处理注册
-Route::post('user/registerdo','Index\UserController@registerdo');
+Route::post('user/registerDo','Index\UserController@registerDo');
 //登录
 Route::get('user/login','Index\UserController@login');
 //处理登录
-Route::post('user/logindo','Index\UserController@logindo');
+Route::post('user/loginDo','Index\UserController@loginDo');
+//退出登录
+Route::get('user/loginOut','Index\UserController@loginOut');
+//登录日志
+Route::get('user/loginLog','Index\UserController@loginLog');
+
 //个人中心
-Route::get('user/self_info','Index\UserController@self_info');
+Route::get('user/selfInfo','Index\UserController@selfInfo');
 
 
 /*
