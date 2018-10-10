@@ -13,47 +13,22 @@ class LoginModel extends Model
      /*
       * 注册
       */
-     public function m_rigster($res)
+     public function registerModel($res)
      {
-         $username = $res['username'];
-         $data1 = DB::table($this->table)->where('username',$username)->first();
-         if($data1)
-         {
-             return 2;
-         }else{
-             $data = DB::table($this->table)->insert($res);
+         $data = DB::table($this->table)->insert($res);
 
-             if($data)
-             {
-                 return 1;
-             }else{
-                 return 2;
-             }
-         }
-
+         return $data;
      }
+
      /*
       * 登录
       */
-     public function m_login($res)
+     public function loginModel($res)
      {
          $username = $res['username'];
-         $password = $res['password'];
          $data = DB::table($this->table)->where('username',$username)->first();
-         if($data)
-         {
-             if($password == $data->password)
-             {
-                 $logModel = new LogModel();
-                 $logModel->insert_log();
-                 return 1;
-             } else {
-                 return 3;
-             }
 
-         }else{
-             return 2;
-         }
+         return $data;
      }
 
      /*
@@ -66,7 +41,6 @@ class LoginModel extends Model
 //            'password' => 'required|string|max:32',
 //            'mobile' => 'required|string|max:11|unique:mi_user',
 //            'verificode' => 'required|captcha',
-
 //        ];
 //    }
 }

@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
-use App\Service\IndexService;
+use App\Services\IndexService;
 
 class IndexController extends  Controller
 {
@@ -13,21 +13,23 @@ class IndexController extends  Controller
     public function index()
     {
         $service = new IndexService();
-        $navigation  = $service->s_index();
-        $shop = $navigation['shop'];
-        $shop1 = $navigation['shop1'];
-        $g_type = $navigation['g_type'];
-//        var_dump($g_type);die;
-        unset($navigation['g_type']);
-        unset($navigation['shop']);
-        unset($navigation['shop1']);
+        $navigation  = $service->serviceIndex();
+
+        $singleGoods = $navigation['singleGoods'];
+        $partGoods = $navigation['partGoods'];
+        $indexType = $navigation['indexType'];
+
+        unset($navigation['singleGoods']);
+        unset($navigation['partGoods']);
+        unset($navigation['indexType']);
         return view('frontend/index/index',[
-                                                'navigation'=> $navigation,
-                                                'shop' => $shop,
-                                                'shop1' => $shop1,
-                                                'g_type' => $g_type,
-                                               ]);
+            'navigation'=> $navigation,
+            'singleGoods' => $singleGoods,
+            'partGoods' => $partGoods,
+            'indexType' => $indexType,
+            ]);
     }
+
     /*
      * 列表页
      */
@@ -35,6 +37,7 @@ class IndexController extends  Controller
     {
         return view('frontend/index/list');
     }
+
     /*
      * 详情页
      */

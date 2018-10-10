@@ -1,0 +1,8 @@
+[1008/205806:ERROR:renderer_main.cc(203)] Running without renderer sandbox
+[1008/205806:ERROR:child_discardable_shared_memory_manager.cc(266)] size: 4194304
+[1008/205846:ERROR:renderer_main.cc(203)] Running without renderer sandbox
+[1008/205846:ERROR:child_discardable_shared_memory_manager.cc(266)] size: 4194304
+[1008/205847:ERROR:child_discardable_shared_memory_manager.cc(266)] size: 4194304
+[1008/205847:INFO:CONSOLE(2)] "Uncaught TypeError: Cannot read property 'map' of undefined", source: https://mat1.gtimg.com/pingjs/ext2020/dcom-static/build/static/js/static.js (2)
+[1008/205848:INFO:CONSOLE(2)] "Uncaught TypeError: n.player.mute is not a function", source: https://mat1.gtimg.com/pingjs/ext2020/dcom-static/build/static/js/static.js (2)
+[1008/205944:ERROR:child_discardable_shared_memory_manager.cc(266)] size: 4194304
