@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model;
 
 use DB;
@@ -7,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class IndexTypeModel extends Model
 {
     /*
-     * 首页分类
+     * 首页分类表
      */
-    public function getIndexType()
+    public function getType()
     {
-        $getType = DB::table('goods_type')->get()->toarray();
+        $getType = DB::table('index_type')->get();
 
         return $getType;
     }

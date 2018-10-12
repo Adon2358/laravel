@@ -12,7 +12,7 @@ class ShopModel extends Model
      */
     public function getModelShopStatus($status)
     {
-        $shop = DB::table('shop')->where('status',$status)->get()->toarray();
+        $shop = DB::table('shop')->where('status',$status)->get();
         return $shop;
 
     }

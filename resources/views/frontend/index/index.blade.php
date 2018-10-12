@@ -41,33 +41,38 @@
 
 	<!-- start banner_y -->
 		<div class="banner_y center">
-			<div class="nav">				
+			<div class="nav">
 				<ul>
-					@foreach($indexType as $key=>$value)
+					@foreach($indexType as $key=>$valu)
 					<li>
-						<a href="">{{$value['t_name']}}</a>
+						<a href="">{{$valu['t_name']}}</a>
 						<div class="pop">
-							<div class="left fl">
+							@foreach($valu['son'] as $ke=>$value)
+							<div class="left fl" style="height: 80px">
+
 								<div>
 									<div class="xuangou_left fl">
 										<a href="">
-											<div class="img fl"><img src="" alt=""></div>
-											<span class="fl"></span>
+											<div class="img fl"><img src="{{$value['t_img']}}" alt=""></div>
+											<span class="fl">{{$value['t_name']}}</span>
 											<div class="clear"></div>
 										</a>
 									</div>
 									<div class="xuangou_right fr"><a href="">选购</a></div>
 									<div class="clear"></div>
-								</div>								
+								</div>
+
 							</div>
+							@endforeach
 							<div class="clear"></div>
+
 						</div>
 					</li>
 					@endforeach
 				</ul>
 			</div>
-		
-		</div>	
+
+		</div>
 
 		<div class="sub_banner center">
 			<div class="sidebar fl">
@@ -91,7 +96,7 @@
 
 	<!-- start danpin -->
 		<div class="danpin center">
-			
+
 			<div class="biaoti center">小米明星单品</div>
 			<div class="main center">
 				@foreach($singleGoods as $k=>$va)

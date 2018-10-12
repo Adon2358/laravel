@@ -18,7 +18,7 @@ class IndexController extends  Controller
         $singleGoods = $navigation['singleGoods'];
         $partGoods = $navigation['partGoods'];
         $indexType = $navigation['indexType'];
-
+//dd($indexType);
         unset($navigation['singleGoods']);
         unset($navigation['partGoods']);
         unset($navigation['indexType']);

@@ -8,10 +8,24 @@
     <title>Document</title>
 </head>
 <body>
-    @foreach($data as $v)
-        <p>{{$v->id}}</p>
-        <p><?php echo date('Y-m-d H:i:s',$v->request_time) ?></p>
-        <p>{{$v->u_id}}</p>
-    @endforeach
+  <table>
+      <tr>
+          <td>id</td>
+          <td></td>
+          <td>request_time</td>
+          <td></td>
+          <td>u_id</td>
+      </tr>
+      @foreach($data as $v)
+          <tr>
+              <td>{{$v->id}}</td>
+              <td></td>
+              <td><?php echo date('Y-m-d H:i:s',$v->request_time)?></td>
+              <td></td>
+              <td>{{$v->u_id}}</td>
+          </tr>
+      @endforeach
+  </table>
+
 </body>
 </html>
