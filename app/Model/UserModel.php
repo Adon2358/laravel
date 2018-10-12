@@ -5,7 +5,7 @@ use DB;
 use Illuminate\Database\Eloquent\Model;
 use App\Model\LogModel;
 
-class LoginModel extends Model
+class UserModel extends Model
 {
      //指定表名
      protected $table = 'user';
@@ -13,7 +13,7 @@ class LoginModel extends Model
      /*
       * 注册
       */
-     public function registerModel($res)
+     public function add($res)
      {
          $data = DB::table($this->table)->insert($res);
 
@@ -23,10 +23,9 @@ class LoginModel extends Model
      /*
       * 登录
       */
-     public function loginModel($res)
+     public function getUserInfoByName($userName)
      {
-         $username = $res['username'];
-         $data = DB::table($this->table)->where('username',$username)->first();
+         $data = DB::table($this->table)->where($userName)->first();
 
          return $data;
      }

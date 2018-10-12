@@ -35,7 +35,6 @@ class LogModel
         $data = DB::table('user_insert_log')->where('id',$id)->update($log);
 
         return $data;
-
     }
 
 }

@@ -11,7 +11,7 @@ class NavigationModel extends Model
      */
     public function navigationModel()
     {
-        $navigation = DB::table('navigation')->get()->toarray();
+        $navigation = DB::table('navigation')->get();
 
         return $navigation;
     }

@@ -5,14 +5,14 @@
  * Date: 2018/9/28
  * Time: 19:09
  */
+
 namespace App\Http\Controllers\Index;
 
 use DB;
 use App\Http\Controllers\Controller;
-use App\Services\LoginService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Session;
-use App\Jobs\SendEmail;
 
 class UserController extends  Controller
 {
@@ -32,52 +32,43 @@ class UserController extends  Controller
         $sign = $request->post();
         $validated = $this->validate($request,[
             //用户名的唯一性
-            'username' => 'unique:user,username',
+            'username' => 'required | unique:user,username',
+//            //邮箱
+//            'email' => ['unique:user,email','regex:/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/'],
+//            //mobile
+//            'mobile' => ['unique:user,mobile','regex:/^1[3-8]{2}[0-9]{8}$/'],
+            //密码
+            'password' => 'required | min:6 ',
             //验证码是否正确
             'verificode' => 'required | captcha',
         ]);
         if($validated) {
-            $arr = [
-                'username' => $sign['username'],
-                'password' => $sign['password'],
-                'repassword' => $sign['repassword'],
-            ];
-            if($arr) {
-                $pregEmail = '/^[A-Za-z0-9]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/';
-                $pregPwd = '/^[a-zA-Z\d_\.\/]{8,}$/';
-                $pregTel = '/^[\d]{11}$/';
-                if (preg_match($pregEmail,$arr['username'])) {
-                    //用户通过邮箱注册
-                    echo "用户通过邮箱注册</br>";
-                } else if (preg_match($pregTel,$arr['username'])) {
-                    //用户通过手机号码注册
-                    echo "用户通过手机号码注册</br>";
-                } else {
-                    return "手机号或邮箱注册</br>";
+            if($sign) {
+                $service = new UserService();
+                $emailPreg = "/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/";
+                $mobilePreg = "/^1[3-9]{2}[0-9]{8}$/";
+                $arr=[];
+                if(preg_match($mobilePreg,$sign['username'])){
+                    $arr['mobile'] = $sign['username'];
+                }elseif (preg_match($emailPreg,$sign['username'])){
+                    $arr['email'] = $sign['username'];
                 }
-                $arr['pregEmail'] = $pregEmail;
-                $service = new LoginService();
+                $arr['password'] = $sign['password'];
                 $result = $service->serviceRigster($arr);
-
                 if($result) {
-
-                    //验证是否是邮箱注册，进行邮件发送
-                    if(preg_match($pregEmail,$sign['username'])){
-                        $this->dispatch(new SendEmail($sign['username']));
-                    }
-
                     return redirect('/prompt')->with([
                         'message'=>'注册成功！',
-                        'url' =>'user/login',
+                        'url' =>'index/index',
                         'jumpTime'=>3,
-                        'status'=>false
+                        'status'=>true
                     ]);
                 } else {
                     return redirect('/prompt')->with([
                         'message'=>'注册失败！',
                         'url' =>'user/register',
                         'jumpTime'=>3,
-                        'status'=>true]);
+                        'status'=>false
+                    ]);
                 }
             }
         }
@@ -95,20 +86,24 @@ class UserController extends  Controller
     /*
      * 处理登录
      */
-    public  function loginDo(Request $request)
+    public function loginDo(Request $request)
     {
         $sign = $request->post();
         $validated = $this->validate($request,[
             'verificode' => 'required|captcha',
         ]);
         if($validated) {
-            $arr = [
-                'username' => $sign['username'],
-                'password' => $sign['password'],
-            ];
-            $service = new LoginService();
+            $arr=[];
+            $emailPreg = "/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/";
+            $mobilePreg = "/^1[3-9]{2}[0-9]{8}$/";
+            if(preg_match($mobilePreg,$sign['username'])){
+                $arr['mobile'] = $sign['username'];
+            }elseif (preg_match($emailPreg,$sign['username'])){
+                $arr['email'] = $sign['username'];
+            }
+            $arr['password'] = $sign['password'];
+            $service = new UserService();
             $result = $service->serviceLogin($arr);
-//            var_dump($result);die;
             if($result == 1) {
                 return redirect('/prompt')->with([
                     'message'=>'登录成功！',
@@ -116,18 +111,9 @@ class UserController extends  Controller
                     'jumpTime'=>3,
                     'status'=>true
                 ]);
-            }
-            if($result == 2){
+            } else {
                 return redirect('/prompt')->with([
-                    'message'=>'登录失败！',
-                    'url' =>'user/login',
-                    'jumpTime'=>3,
-                    'status'=>false
-                ]);
-            }
-            if($result == 3) {
-                return redirect('/prompt')->with([
-                    'message'=>'密码错误！',
+                    'message'=>'用户名/密码错误！',
                     'url' =>'user/login',
                     'jumpTime'=>3,
                     'status'=>false
@@ -142,7 +128,7 @@ class UserController extends  Controller
      */
     public function loginOut()
     {
-        session()->forget('username');
+        session()->forget('user');
         return redirect('/prompt')->with([
             'message'=>'退出成功！',
             'url' =>'user/login',
