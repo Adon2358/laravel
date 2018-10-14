@@ -31,6 +31,20 @@ class UserService
 
         return $insert;
     }
+
+    /*
+     * 用户唯一性
+     */
+    public function serviceUserUnique($arr)
+    {
+        $loginModel = new UserModel();
+        $unique = $loginModel->userNameUnique($arr);
+        if($unique)
+        {
+            return 3;
+        }
+    }
+
     /*
      * 登录
      * return 1登陆成功
@@ -38,7 +52,7 @@ class UserService
      */
     public function serviceLogin($result)
     {
-//        $result['password'] = md5($result['password']);
+        $result['password'] = md5($result['password']);
         $model = new UserModel();
         $data= $model->getUserInfoByName($result);
         if(!$data){

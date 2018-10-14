@@ -21,6 +21,17 @@ class UserModel extends Model
      }
 
      /*
+      * 验证用户唯一性
+      */
+      public function userNameUnique($arr)
+      {
+          $userNamem = $arr['username'];
+          $userUnique = DB::table($this->table)->where('mobile',$userNamem)->orwhere('email',$userNamem)->first();
+ 
+          return $userUnique;
+      }
+
+     /*
       * 登录
       */
      public function getUserInfoByName($userName)

@@ -18,7 +18,7 @@ Route::get('/', function () {
  * IndexController
  */
 //首页
-Route::get('/','Index\IndexController@index');
+Route::get('index/index','Index\IndexController@index');
 //列表
 Route::get('index/list','Index\IndexController@list');
 //详情页
