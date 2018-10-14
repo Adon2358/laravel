@@ -32,7 +32,7 @@ class UserController extends  Controller
         $sign = $request->post();
         $validated = $this->validate($request,[
             //用户名的唯一性
-            'username' => 'required | unique:user,username',
+            'username' => 'required | unique:user,mobile',
 //            //邮箱
 //            'email' => ['unique:user,email','regex:/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/'],
 //            //mobile
@@ -54,6 +54,16 @@ class UserController extends  Controller
                     $arr['email'] = $sign['username'];
                 }
                 $arr['password'] = $sign['password'];
+                $unique = $service->serviceUserUnique($sign);
+                if($unique == 3)
+                {
+                    return redirect('/prompt')->with([
+                        'message'=>'用户已存在！',
+                        'url' =>'user/register',
+                        'jumpTime'=>3,
+                        'status'=>false
+                    ]);
+                }
                 $result = $service->serviceRigster($arr);
                 if($result) {
                     return redirect('/prompt')->with([
@@ -89,6 +99,7 @@ class UserController extends  Controller
     public function loginDo(Request $request)
     {
         $sign = $request->post();
+
         $validated = $this->validate($request,[
             'verificode' => 'required|captcha',
         ]);
