@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'Index\IndexController@index');
+
+Route::get('/php',function(){
+    phpinfo();
 });
 /*
  * IndexController
