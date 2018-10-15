@@ -28,11 +28,17 @@
             <div class="gouwuche fr"><a href="{{url('cart/cart')}}">购物车</a></div>
             <div class="fr">
                 <ul>
+                    @if(!session()->has('user'))
+                        {{--session()->has('username');--}}
                     <li><a href="{{url('user/login')}}" target="_blank">登录</a></li>
                     <li>|</li>
-                    <li><a href="{{url('user/register')}}" target="_blank" >注册</a></li>
-                    <li>|</li>
-                    <li><a href="{{url('user/self_info')}}">消息通知</a></li>
+                    @else
+                        <li>欢迎<?php echo Session()->get('user')['username']; ?>登录</li>
+                        <li><a href="{{url('user/loginOut')}}">退出</a></li>
+                    @endif
+                        <li><a href="{{url('user/register')}}" target="_blank" >注册</a></li>
+                        <li>|</li>
+                    <li><a href="{{url('user/selfInfo')}}">消息通知</a></li>
                 </ul>
             </div>
             <div class="clear"></div>

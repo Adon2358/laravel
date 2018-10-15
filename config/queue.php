@@ -13,6 +13,9 @@ return [
     |
     */
 
+    /*
+     * 默认使用sync
+     */
     'default' => env('QUEUE_DRIVER', 'sync'),
 
     /*
@@ -30,10 +33,16 @@ return [
 
     'connections' => [
 
+        /*
+         * 同步队列
+         */
         'sync' => [
             'driver' => 'sync',
         ],
 
+        /*
+         * 数据库为中间转存
+         */
         'database' => [
             'driver' => 'database',
             'table' => 'jobs',
@@ -57,6 +66,9 @@ return [
             'region' => env('SQS_REGION', 'us-east-1'),
         ],
 
+        /*
+         * 通过redis实现
+         */
         'redis' => [
             'driver' => 'redis',
             'connection' => 'default',

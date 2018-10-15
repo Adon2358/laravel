@@ -22,7 +22,7 @@
 					<li>|</li>
 					<li><a href="{{url('user/register')}}" target="_blank" >注册</a></li>
 					<li>|</li>
-					<li><a href="{{url('user/self_info')}}" target="_blank" >个人中心</a></li>
+					<li><a href="{{url('user/selfInfo')}}" target="_blank" >个人中心</a></li>
 				</ul>
 				
 			</div>
