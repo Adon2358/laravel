@@ -38,7 +38,7 @@
                     @endif
                         <li><a href="{{url('user/register')}}" target="_blank" >注册</a></li>
                         <li>|</li>
-                    <li><a href="{{url('user/self_info')}}">消息通知</a></li>
+                    <li><a href="{{url('user/selfInfo')}}">消息通知</a></li>
                 </ul>
             </div>
             <div class="clear"></div>
