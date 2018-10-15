@@ -36,7 +36,7 @@ class UserModel extends Model
       */
      public function getUserInfoByName($userName)
      {
-         $data = DB::table($this->table)->where($userName)->first();
+         $data = DB::table($this->table)->where($userName)->first()->toarray();
 
          return $data;
      }

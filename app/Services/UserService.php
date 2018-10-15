@@ -26,8 +26,8 @@ class UserService
 //        dd($result);
         $loginModel = new UserModel();
         $insert = $loginModel->add($result);
-        //注册成功指向登录方法直接登录成功
-        $this->serviceLogin($result);
+        //注册成功存入session
+        Session()->put('user',$result);
 
         return $insert;
     }
@@ -52,6 +52,7 @@ class UserService
      */
     public function serviceLogin($result)
     {
+
         $result['password'] = md5($result['password']);
         $model = new UserModel();
         $data= $model->getUserInfoByName($result);

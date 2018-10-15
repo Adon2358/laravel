@@ -65,6 +65,7 @@ class UserController extends  Controller
                     ]);
                 }
                 $result = $service->serviceRigster($arr);
+
                 if($result) {
                     return redirect('/prompt')->with([
                         'message'=>'注册成功！',
