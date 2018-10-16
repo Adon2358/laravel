@@ -58,3 +58,24 @@ Route::get('user/selfInfo','Index\UserController@selfInfo');
  * 跳转提示路由
  */
 Route::resource('/prompt','PromptController');
+
+/*
+ * 后台
+ */
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+//登录
+Route::get('admin/login', 'Admin\AdminController@login');
+//处理登录
+Route::post('admin/loginDo', 'Admin\AdminController@loginDo');
+
+Route::get('admin/test', 'Admin\AdminController@test');
+
+
+//首页
+Route::get('admin/index', 'Admin\AdminController@index');
+
+
+
