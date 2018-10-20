@@ -18,7 +18,8 @@ class AdminLoginService
         $a_email = $result['a_email'];
         $adminModel = new AdminModel();
         $data = $adminModel->getAdminUserInfo($a_email);
-        if($result['a_pwd'] != $data->a_pwd)
+        $a_pwd = md5($result['a_pwd']);
+        if($a_pwd != $data->a_pwd)
         {
             return 2;
         }
@@ -26,9 +27,9 @@ class AdminLoginService
         {
             return 3;
         }
-        $a_log_time = time();
-        $adminModel->upadteAdminloginTime($data->a_id,$a_log_time);
-        $data->a_login_time = $a_log_time;
+        $a_last_time = time();
+        $adminModel->upadteAdminloginTime($data->a_id,$a_last_time);
+        $data->a_last_time = $a_last_time;
         Session()->put('admin',$data);
 
         return 1;
