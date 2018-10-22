@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use DB;
 use App\Model\AdminModel;
 use App\Model\MenuModel;
 use App\Model\AdminRoleModel;
@@ -113,13 +114,25 @@ class AdminIndexService
                 'a_id' => $a_id,
             ];
         }
-        $adminModel = new AdminModel();
-        $res = $adminModel->getUpDoAdmin($arr,$a_id);
-        $adminRole = new AdminRoleModel();
-        $adminRole->adminIdDelRole($a_id);
-        $adminRole->addAdminRole($role);
-
-        return $res;
+        $result = true;
+        DB::beginTransaction();
+        try{
+            $adminModel = new AdminModel();
+            $adminModel->getUpDoAdmin($arr,$a_id);
+            $adminRole = new AdminRoleModel();
+            $adminRole->adminIdDelRole($a_id);
+            $adminRole->addAdminRole($role);
+            DB::commit();
+        }catch(\Exception $e){
+            $result = false;
+            $e->getMessage();
+            DB::rollBack();
+        }
+        if($result){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /*

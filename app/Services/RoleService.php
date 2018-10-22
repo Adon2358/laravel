@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use DB;
 use App\Model\MenuModel;
 use App\Model\RoleModel;
 use App\Model\RoleResourceModel;
@@ -119,13 +120,25 @@ class RoleService
                 'resource_id' => $v,
             ];
         }
-        $roleModel = new RoleModel();
-        $res = $roleModel->getUpDoRole($arr,$r_id);
-        $roleResourceMenu = new RoleResourceModel();
-        $roleResourceMenu->delRoleMenu($r_id);
-        $roleResourceMenu->addRoleMenu($menu_id);
-
-        return $res;
+        $result = true;
+        DB::beginTransaction();
+        try{
+            $roleModel = new RoleModel();
+            $roleModel->getUpDoRole($arr,$r_id);
+            $roleResourceMenu = new RoleResourceModel();
+            $roleResourceMenu->delRoleMenu($r_id);
+            $roleResourceMenu->addRoleMenu($menu_id);
+            DB::commit();
+        }catch(\Exception $e){
+            $result = false;
+            $e->getMessage();
+            DB::rollBack();
+        }
+        if($result){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /*
