@@ -31,7 +31,7 @@
                 <td><?php echo date('Y-m-d H:i:s',$v['a_last_time']);?></td>
                 <td>
                     @if($v['a_is_admin'] == 0)
-                        {{$v['a_is_valid']?"解结":"冻结"}}
+                        {{$v['a_is_valid']?"冻结":"解冻"}}
                     @endif
 
                 </td>
@@ -43,9 +43,9 @@
 
                     @if($v['a_is_admin'] == 0)
                         @if($v['a_is_valid'] == 1)
-                            <a href="javascript:void(0)"  class="fa fa-fw fa-toggle-off adminvalid" id="{{$v['a_id']}}"></a>
+                            <a href="javascript:void(0)"  class="fa fa-fw fa-toggle-on adminvalid" id="{{$v['a_id']}}"></a>
                         @else
-                            <a href="javascript:void(0)" class="fa fa-fw fa-toggle-on adminvalid" id="{{$v['a_id']}}"></a>
+                            <a href="javascript:void(0)" class="fa fa-fw fa-toggle-off adminvalid" id="{{$v['a_id']}}"></a>
                         @endif
                     @endif
 
