@@ -59,4 +59,14 @@ class RoleResourceModel extends Model
         return $resource ;
     }
 
+    /*
+     * 按钮权限
+     */
+    public function buttonMenu()
+    {
+        $res = DB::table($this->table)->where('type',0)->get();
+
+        return $res;
+    }
+
 }
