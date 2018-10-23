@@ -92,13 +92,26 @@ class AdminController extends Controller
     /*
      * 管理员列表
      */
-    public function adminList()
+    public function adminList(Request $request)
     {
+        $m_id = $request->input();
         $adminIndexService = new AdminIndexService();
         $data = $adminIndexService->serviceAllAdmin();
+        $button = $this->buttonMenu($m_id);
 
-        return view('backend.admin.adminList',['data'=>$data]);
+        return view('backend.admin.adminList',['data'=>$data,'button'=>$button]);
 
+    }
+
+    /*
+     * 显示菜单/按钮权限
+     */
+    public function buttonMenu($m_id)
+    {
+        $adminIndexService = new AdminIndexService();
+        $data = $adminIndexService->serviceAdminButtonMenu($m_id);
+
+        return $data;
     }
 
     /*

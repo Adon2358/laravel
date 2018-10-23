@@ -10,6 +10,16 @@ class ButtonModel extends Model
     protected $table = 'button';
 
     /*
+     * 通过resource_id获取button中相应的数据
+     */
+    public function resourceIdGetButton($resource_id,$m_id)
+    {
+        $res = DB::table($this->table)->whereIn('b_id',$resource_id)->where('m_id',$m_id)->get();
+
+        return $res;
+    }
+
+    /*
      * 按钮表数据
      */
     public function getAllButton()
