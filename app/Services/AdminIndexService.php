@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Model\ButtonModel;
 use DB;
 use App\Model\AdminModel;
 use App\Model\MenuModel;
@@ -20,6 +21,26 @@ class AdminIndexService
         $data = $adminModel->getAllAdmin();
 
         return $data;
+    }
+
+    /*
+     * 按钮权限
+     */
+    public function serviceAdminButtonMenu($m_id)
+    {
+
+        $roleResource = new RoleResourceModel();
+        $res = $roleResource->buttonMenu();
+        $arr = $this->objectToArray($res);
+        foreach($arr as $k=>$v)
+        {
+            $resource_id = array_column($v,'resource_id');
+        }
+        $buttonModel = new ButtonModel();
+        $button = $buttonModel->resourceIdGetButton($resource_id,$m_id);
+        $buttonMenu = $this->objectToArray($button);
+
+        return $buttonMenu;
     }
 
     /*

@@ -37,8 +37,19 @@
                 </td>
                 <td>
                     @if($v['a_is_admin'] == 0)
-                        <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['a_id']}}"></a>
-                        <a href="adminup/a_id/{{$v['a_id']}}" class="fa fa-fw fa-edit"></a>
+                        @if($button)
+                            @foreach($button as $key=>$value)
+                                @foreach($value as $ke=>$valu)
+                                    @if($valu['b_name'] == "删除管理员")
+                                        <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['a_id']}}"></a>
+                                    @endif
+                                    @if($valu['b_name'] == "编辑管理员")
+                                        <a href="adminup/a_id/{{$v['a_id']}}" class="fa fa-fw fa-edit"></a>
+                                    @endif
+                                @endforeach
+                            @endforeach
+                        @endif
+
                     @endif
 
                     @if($v['a_is_admin'] == 0)

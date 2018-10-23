@@ -21,8 +21,18 @@
                 <td>{{$v['r_id']}}</td>
                 <td>{{$v['r_name']}}</td>
                 <td>
-                   <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['r_id']}}"></a>
-                   <a href="roleup/r_id/{{$v['r_id']}}" class="fa fa-fw fa-edit"></a>
+                    @if($button)
+                        @foreach($button as $key=>$value)
+                            @foreach($value as $ke=>$valu)
+                                @if($valu['b_name'] == "删除角色")
+                                    <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['r_id']}}"></a>
+                                @endif
+                                @if($valu['b_name'] == "编辑角色")
+                                        <a href="roleup/r_id/{{$v['r_id']}}" class="fa fa-fw fa-edit"></a>
+                                @endif
+                            @endforeach
+                        @endforeach
+                    @endif
                 </td>
             </tr>
         @endforeach

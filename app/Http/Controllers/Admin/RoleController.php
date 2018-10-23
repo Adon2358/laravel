@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\RoleService;
 use App\Services\MenuService;
+use App\Http\Controllers\Admin\AdminController;
 
 class RoleController extends Controller
 {
@@ -13,12 +14,16 @@ class RoleController extends Controller
     /*
      * 角色列表
      */
-    public function roleList()
+    public function roleList(Request $request)
     {
+        $m_id = $request->input();
         $roleService = new RoleService();
         $data = $roleService->serviceAllRole();
 
-        return view('backend.role.roleList',['data'=>$data]);
+        $adminController = new AdminController();
+        $button = $adminController->buttonMenu($m_id);
+
+        return view('backend.role.roleList',['data'=>$data,'button'=>$button]);
 
     }
 
