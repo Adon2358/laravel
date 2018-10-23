@@ -11,7 +11,7 @@ use App\Services\RoleService;
 class AdminController extends Controller
 {
     /*
-     * 后台登录1
+     * 后台登录
      */
     public function login()
     {
