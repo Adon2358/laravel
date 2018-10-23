@@ -220,7 +220,7 @@ class AdminController extends Controller
         $adminIndexService = new AdminIndexService();
         $data = $adminIndexService->serviceAdminValid($a_id);
         if($data){
-            return $this->adminList();
+            return $this->adminList($request);
         } else {
             return 2;
         }
