@@ -115,7 +115,7 @@ Route::group(['namespace' => 'Admin','prefix' => '/role'],function(){
 });
 
 /*
- * 按钮（权限）
+ * 菜单（权限）
  */
 Route::group(['namespace' => 'Admin','prefix' => '/menu'],function(){
 
@@ -151,6 +151,68 @@ Route::group(['namespace' => 'Admin','prefix' => '/button'],function(){
     Route::get('/buttonup/b_id/{b_id}', 'ButtonController@buttonUp');
     //修改数据
     Route::post('/buttonupdo', 'ButtonController@buttonUpDo');
+
+});
+
+/*
+ * 商品
+ */
+Route::group(['namespace' => 'Admin','prefix' => '/goods'],function(){
+
+    //展示商品
+    Route::get('/goodslist', 'GoodsController@goodsList');
+    //添加商品
+    Route::get('/goodsadd', 'GoodsController@goodsAdd');
+    //处理添加数据
+    Route::post('/goodsadddo', 'GoodsController@goodsAddDo');
+    //删除商品
+    Route::post('/goodsdel', 'GoodsController@goodsDel');
+    //查出修改的那一条
+    Route::get('/goodsup/goods_id/{goods_id}', 'GoodsController@goodsUp');
+    //修改数据
+    Route::post('/goodsupdo', 'GoodsController@goodsUpDo');
+    //商品上架/下架
+    Route::post('/goodsstatus', 'GoodsController@goodsStatus');
+
+});
+
+/*
+ * 品牌
+ */
+Route::group(['namespace' => 'Admin','prefix' => '/brand'],function(){
+
+    //展示品牌
+    Route::get('/brandlist', 'BrandController@brandList');
+    //添加品牌
+    Route::get('/brandadd', 'BrandController@brandAdd');
+    //处理添加数据
+    Route::post('/brandadddo', 'BrandController@brandAddDo');
+    //删除品牌
+    Route::post('/branddel', 'BrandController@brandDel');
+    //查出修改的那一条
+    Route::get('/brandup/brand_id/{brand_id}', 'BrandController@brandUp');
+    //修改数据
+    Route::post('/brandupdo', 'BrandController@brandUpDo');
+
+});
+
+/*
+ * 分类
+ */
+Route::group(['namespace' => 'Admin','prefix' => '/category'],function(){
+
+    //展示分类
+    Route::get('/categorylist', 'CategoryController@categoryList');
+    //添加分类
+    Route::get('/categoryadd', 'CategoryController@categoryAdd');
+    //处理添加数据
+    Route::post('/categoryadddo', 'CategoryController@categoryAddDo');
+    //删除分类
+    Route::post('/categorydel', 'CategoryController@categoryDel');
+    //查出修改的那一条
+    Route::get('/categoryup/cat_id/{cat_id}', 'CategoryController@categoryUp');
+    //修改数据
+    Route::post('/categoryupdo', 'CategoryController@categoryUpDo');
 
 });
 
