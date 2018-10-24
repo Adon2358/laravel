@@ -27,7 +27,7 @@
                 <label for="inputPassword3" class="col-sm-2 control-label">商品名称</label>
 
                 <div class="col-sm-10">
-                    <input type="text" name="goods_name" class="form-control" id="inputPassword3" placeholder="商品名称">
+                    <input type="text" name="name" class="form-control" id="inputPassword3" placeholder="商品名称">
                 </div>
             </div>
             <div class="form-group">
@@ -45,35 +45,42 @@
                 <label for="inputPassword3" class="col-sm-2 control-label">商品库存</label>
 
                 <div class="col-sm-10">
-                    <input type="number" name="goods_number" class="form-control" placeholder="商品库存">
+                    <input type="number" name="number" class="form-control" placeholder="商品库存">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">市场价格</label>
+                <label for="inputPassword3" class="col-sm-2 control-label">商品价格</label>
 
                 <div class="col-sm-10">
-                    <input type="text" name="market_price" class="form-control" placeholder="市场价格">
+                    <input type="text" name="price" class="form-control" placeholder="商品价格">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">商店价格</label>
+                <label for="inputPassword3" class="col-sm-2 control-label">商品优惠</label>
 
                 <div class="col-sm-10">
-                    <input type="text" name="shop_price" class="form-control" placeholder="商店价格">
+                    <input type="text" name="yh" class="form-control" placeholder="商品优惠">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">商品描述</label>
 
                 <div class="col-sm-10">
-                    <input type="text" name="goods_desc" class="form-control" placeholder="商品描述">
+                    <input type="text" name="desc" class="form-control" placeholder="商品描述">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">评论条数</label>
+
+                <div class="col-sm-10">
+                    <input type="text" name="comment" class="form-control" placeholder="评论条数">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">商品图片</label>
 
                 <div class="col-sm-10">
-                    <input type="text" name="goods_img" class="form-control" placeholder="商品图片">
+                    <input type="text" name="img" class="form-control" placeholder="商品图片">
                 </div>
             </div>
             <div class="form-group">

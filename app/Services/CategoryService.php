@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use app\admin\model\Cate;
-use App\Model\CategoryModel;
+use App\Model\IndexTypeModel;
 
 class CategoryService
 {
@@ -12,7 +12,7 @@ class CategoryService
      */
     public function serviceCategoryList()
     {
-        $categoryModel = new CategoryModel();
+        $categoryModel = new IndexTypeModel();
         $data = $categoryModel->getAllCategory()->toarray();
 
         return $data;
@@ -21,10 +21,10 @@ class CategoryService
     /*
      * 删除分类
      */
-    public function serviceDelCategory($cat_id)
+    public function serviceDelCategory($t_id)
     {
-        $categoryModel = new CategoryModel();
-        $data = $categoryModel->delFirstCategory($cat_id);
+        $categoryModel = new IndexTypeModel();
+        $data = $categoryModel->delFirstCategory($t_id);
 
         return $data;
     }
@@ -38,12 +38,13 @@ class CategoryService
     public function serviceCategoryAdd($data)
     {
         $arr = [
-            'cat_name' => $data['cat_name'],
+            't_name' => $data['t_name'],
+            't_img' => $data['t_img'],
             'p_id' => $data['p_id'],
         ];
         //检查表中是否有同名品牌
-        $categoryModel = new CategoryModel();
-        $categoryExist = $categoryModel->categoryNameExist($arr['cat_name']);
+        $categoryModel = new IndexTypeModel();
+        $categoryExist = $categoryModel->categoryNameExist($arr['t_name']);
         if($categoryExist)
         {
             return 2;
@@ -66,10 +67,10 @@ class CategoryService
     /*
     * 查出修改的那一条商品
     */
-    public function serviceUpCategoryFirst($cat_id)
+    public function serviceUpCategoryFirst($t_id)
     {
-        $categoryModel = new CategoryModel();
-        $upCategoryFirst = $categoryModel->upCategoryFirst($cat_id)->toarray();
+        $categoryModel = new IndexTypeModel();
+        $upCategoryFirst = $categoryModel->upCategoryFirst($t_id)->toarray();
 
         return $upCategoryFirst;
     }
@@ -79,18 +80,19 @@ class CategoryService
      */
     public function serviceUpDoCategoryFirst($data)
     {
-        $cat_id = $data['cat_id'];
+        $t_id = $data['t_id'];
         $arr = [
-            'cat_name' => $data['cat_name'],
+            't_name' => $data['t_name'],
+            't_img' => $data['t_img'],
             'p_id' => $data['p_id'],
         ];
         if($data['p_id'] == 0){
-            $arr['path'] = $cat_id;
+            $arr['path'] = $t_id;
         }else{
-            $arr['path'] = $data['p_id'].'-'.$cat_id;
+            $arr['path'] = $data['p_id'].'-'.$t_id;
         }
-        $categoryModel = new CategoryModel();
-        $upBrandFirst = $categoryModel->upFirstCategory($arr,$cat_id);
+        $categoryModel = new IndexTypeModel();
+        $upBrandFirst = $categoryModel->upFirstCategory($arr,$t_id);
 
         return $upBrandFirst;
     }

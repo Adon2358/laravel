@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Model\GoodsModel;
+use App\Model\ShopModel;
 
 class GoodsService
 {
@@ -11,8 +11,8 @@ class GoodsService
      */
     public function serviceGoodsList()
     {
-        $goodsModel = new GoodsModel();
-        $data = $goodsModel->getAllGoods()->toarray();
+        $goodsModel = new ShopModel();
+        $data = $goodsModel->getAllGoods();
 
         return $data;
     }
@@ -24,20 +24,21 @@ class GoodsService
     {
         $arr = [
             'cat_id' => $data['cat_id'],
-            'goods_sn' => rand(1000,9000).time(),
-            'goods_name' => $data['goods_name'],
+            'sn' => rand(1000,9000).time(),
+            'name' => $data['name'],
             'brand_id' => $data['brand_id'],
-            'goods_number' => $data['goods_number'],
-            'market_price' => $data['market_price'],
-            'shop_price' => $data['shop_price'],
-            'goods_desc' => $data['goods_desc'],
-            'goods_img' => $data['goods_img'],
+            'number' => $data['number'],
+            'price' => $data['price'],
+            'desc' => $data['desc'],
+            'img' => $data['img'],
             'add_time' => time(),
             'is_top_down' => $data['is_top_down'],
+            'yh' => $data['yh'],
+            'comment' => $data['comment'],
         ];
         //检查表中是否有同名商品有则库存相加
-        $goodsModel = new GoodsModel();
-        $goodsExist = $goodsModel->goodsNameExist($arr['goods_name']);
+        $goodsModel = new ShopModel();
+        $goodsExist = $goodsModel->goodsNameExist($arr['name']);
         if($goodsExist)
         {
             $data = $goodsModel->updateGoods($goodsExist,$arr);
@@ -51,10 +52,10 @@ class GoodsService
     /*
      * 删除商品
      */
-    public function serviceDelGoods($goods_id)
+    public function serviceDelGoods($id)
     {
-        $goodsModel = new GoodsModel();
-        $data = $goodsModel->delFirstGoods($goods_id);
+        $goodsModel = new ShopModel();
+        $data = $goodsModel->delFirstGoods($id);
 
         return $data;
     }
@@ -62,10 +63,10 @@ class GoodsService
     /*
      * 查出修改的那一条商品
      */
-    public function serviceUpGoodsFirst($goods_id)
+    public function serviceUpGoodsFirst($id)
     {
-        $goodsModel = new GoodsModel();
-        $upGoodsFirst = $goodsModel->getUpStatusGoods($goods_id)->toarray();
+        $goodsModel = new ShopModel();
+        $upGoodsFirst = $goodsModel->getUpStatusGoods($id)->toarray();
 
         return $upGoodsFirst;
     }
@@ -75,21 +76,20 @@ class GoodsService
      */
     public function serviceUpDoGoodsFirst($data)
     {
-        $goods_id = $data['goods_id'];
+        $id = $data['id'];
         $arr = [
             'cat_id' => $data['cat_id'],
-            'goods_name' => $data['goods_name'],
+            'name' => $data['name'],
             'brand_id' => $data['brand_id'],
-            'goods_number' => $data['goods_number'],
-            'market_price' => $data['market_price'],
-            'shop_price' => $data['shop_price'],
-            'goods_desc' => $data['goods_desc'],
-            'goods_img' => $data['goods_img'],
+            'number' => $data['number'],
+            'price' => $data['price'],
+            'desc' => $data['desc'],
+            'img' => $data['img'],
             'add_time' => time(),
             'is_top_down' => $data['is_top_down'],
         ];
-        $goodsModel = new GoodsModel();
-        $upGoodsFirst = $goodsModel->upFirstGoods($arr,$goods_id);
+        $goodsModel = new ShopModel();
+        $upGoodsFirst = $goodsModel->upFirstGoods($arr,$id);
 
         return $upGoodsFirst;
     }
@@ -97,17 +97,17 @@ class GoodsService
     /*
      * 上架/下架
      */
-    public function serviceGoodsStatus($goods_id)
+    public function serviceGoodsStatus($id)
     {
-        $goodsModel = new GoodsModel();
+        $goodsModel = new ShopModel();
         //查出那一条数据
-        $res = $goodsModel->getUpStatusGoods($goods_id)->toarray();
+        $res = $goodsModel->getUpStatusGoods($id)->toarray();
         if($res['is_top_down'] == 1)
         {
-            $data = $goodsModel->goodsDown($goods_id);
+            $data = $goodsModel->goodsDown($id);
             return $data;
         }else{
-            $data = $goodsModel->goodsTop($goods_id);
+            $data = $goodsModel->goodsTop($id);
             return $data;
         }
     }
