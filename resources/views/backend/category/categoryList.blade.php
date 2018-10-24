@@ -14,19 +14,21 @@
         <tr>
             <td>分类ID</td>
             <td>分类名称</td>
+            <td>分类图片</td>
             <td>上级分类</td>
             <td>Path</td>
             <td>操作</td>
         </tr>
         @foreach($data as $k=>$v)
             <tr>
-                <td>{{$v['cat_id']}}</td>
-                <td>{{str_repeat('|-',substr_count($v['path'],'-'))}}{{$v['cat_name']}}</td>
+                <td>{{$v['t_id']}}</td>
+                <td>{{str_repeat('|-',substr_count($v['path'],'-'))}}{{$v['t_name']}}</td>
+                <td><img src="{{URL::asset($v['t_img'])}}" alt="" width="30px" height="30px"></td>
                 <td>{{$v['p_id']}}</td>
                 <td>{{$v['path']}}</td>
                 <td>
-                     <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['cat_id']}}"></a>
-                     <a href="categoryup/cat_id/{{$v['cat_id']}}" class="fa fa-fw fa-edit"></a>
+                     <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['t_id']}}"></a>
+                     <a href="categoryup/cat_id/{{$v['t_id']}}" class="fa fa-fw fa-edit"></a>
                 </td>
             </tr>
         @endforeach
@@ -42,11 +44,11 @@
     <script>
 
         $(".del").click(function(){
-            var cat_id = $(this).attr('id');
+            var t_id = $(this).attr('id');
             $.ajax({
                 type: "post",
                 url: "categorydel",
-                data: {cat_id:cat_id,'_token':'{{csrf_token()}}'},
+                data: {t_id:t_id,'_token':'{{csrf_token()}}'},
                 success: function(msg){
                     if(msg){
                         $("body").html(msg);

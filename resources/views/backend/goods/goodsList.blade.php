@@ -13,13 +13,12 @@
     <table class="table table-hover">
         <tr>
             <td>商品ID</td>
-            <td>分类ID</td>
             <td>商品货号</td>
             <td>商品名称</td>
-            <td>品牌ID</td>
-            <td>商品库存</td>
-            <td>市场价格</td>
-            <td>商店价格</td>
+            <td>分类</td>
+            <td>品牌</td>
+            <td>商品优惠</td>
+            <td>商品价格</td>
             <td>商品描述</td>
             <td>商品图片</td>
             <td>添加时间</td>
@@ -28,28 +27,27 @@
         </tr>
         @foreach($data as $k=>$v)
             <tr>
-                <td>{{$v['goods_id']}}</td>
-                <td>{{$v['cat_id']}}</td>
-                <td>{{$v['goods_sn']}}</td>
-                <td>{{$v['goods_name']}}</td>
-                <td>{{$v['brand_id']}}</td>
-                <td>{{$v['goods_number']}}</td>
-                <td>{{$v['market_price']}}</td>
-                <td>{{$v['shop_price']}}</td>
-                <td>{{$v['goods_desc']}}</td>
-                <td><img src="{{URL::asset($v['goods_img'])}}" alt=""></td>
+                <td>{{$v['id']}}</td>
+                <td>{{$v['sn']}}</td>
+                <td>{{$v['name']}}</td>
+                <td>{{$v['cat_name']}}</td>
+                <td>{{$v['brand_name']}}</td>
+                <td>{{$v['yh']}}</td>
+                <td>{{$v['price']}}</td>
+                <td>{{$v['desc']}}</td>
+                <td><img src="{{URL::asset($v['img'])}}" alt="" width="30px" height="30px"></td>
                 <td><?php echo date('Y-m-d H:i:s',$v['add_time']);?></td>
                 <td>
-                    <a href="javescript:void(0)" class="goodsStatus" id="{{$v['goods_id']}}">{{$v['is_top_down']?"上架":"下架"}}</a>
+                    <a href="javescript:void(0)" class="goodsStatus" id="{{$v['id']}}">{{$v['is_top_down']?"上架":"下架"}}</a>
                 </td>
                 <td>
-                     <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['goods_id']}}"></a>
-                     <a href="goodsup/goods_id/{{$v['goods_id']}}" class="fa fa-fw fa-edit"></a>
+                     <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['id']}}"></a>
+                     <a href="goodsup/goods_id/{{$v['id']}}" class="fa fa-fw fa-edit"></a>
                 </td>
             </tr>
         @endforeach
     </table>
-    {{--{{$data->links()}}--}}
+    {{$data->links()}}
 @stop
 
 @section('css')
@@ -60,11 +58,11 @@
     <script>
 
         $(".del").click(function(){
-            var goods_id = $(this).attr('id');
+            var id = $(this).attr('id');
             $.ajax({
                 type: "post",
                 url: "goodsdel",
-                data: {goods_id:goods_id,'_token':'{{csrf_token()}}'},
+                data: {id:id,'_token':'{{csrf_token()}}'},
                 success: function(msg){
                     if(msg){
                         $("body").html(msg);
@@ -77,11 +75,11 @@
         });
 
         $(".goodsStatus").click(function(){
-            var goods_id = $(this).attr('id');
+            var id = $(this).attr('id');
             $.ajax({
                 type: "post",
                 url: "goodsstatus",
-                data: {goods_id:goods_id,'_token':'{{csrf_token()}}'},
+                data: {id:id,'_token':'{{csrf_token()}}'},
                 success: function(msg){
                     if(msg){
                         $("body").html(msg);

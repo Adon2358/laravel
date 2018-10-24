@@ -10,14 +10,14 @@
 
 @section('content')
     <form class="form-horizontal" action="{{url('category/categoryupdo')}}" method="post">
-        <input type="hidden" name="cat_id" value="{{$data['cat_id']}}">
+        <input type="hidden" name="t_id" value="{{$data['t_id']}}">
         {{csrf_field()}}
         <div class="box-body">
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">分类名称</label>
 
                 <div class="col-sm-10">
-                    <input type="text" name="cat_name" class="form-control" id="inputPassword3" value="{{$data['cat_name']}}" placeholder="分类名称">
+                    <input type="text" name="t_name" class="form-control" id="inputPassword3" value="{{$data['t_name']}}" placeholder="分类名称">
                 </div>
             </div>
 
@@ -28,9 +28,17 @@
                     <select name="p_id" id="" class="form-control">
                         <option value="0">请选择</option>
                         @foreach($categoryAll as $k=>$v)
-                            <option value="{{$v['cat_id']}}">{{$v['cat_name']}}</option>
+                            <option value="{{$v['t_id']}}">{{$v['t_name']}}</option>
                         @endforeach
                     </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">分类图片</label>
+
+                <div class="col-sm-10">
+                    <input type="text" name="t_img" class="form-control" id="inputPassword3"  placeholder="分类图片">
                 </div>
             </div>
 

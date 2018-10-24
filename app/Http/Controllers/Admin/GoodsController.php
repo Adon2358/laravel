@@ -65,9 +65,9 @@ class GoodsController extends Controller
      */
     public function goodsDel(Request $request)
     {
-        $goods_id = $request->post('goods_id');
+        $id = $request->post('id');
         $goodsService = new GoodsService();
-        $data = $goodsService->serviceDelGoods($goods_id);
+        $data = $goodsService->serviceDelGoods($id);
         if($data){
             return $this->goodsList();
         } else {
@@ -78,11 +78,11 @@ class GoodsController extends Controller
     /*
      * 查出修改的那一条
      */
-    public function goodsUp($goods_id)
+    public function goodsUp($id)
     {
         //查出修改的那一条
         $goodsService = new GoodsService();
-        $data = $goodsService->serviceUpGoodsFirst($goods_id);
+        $data = $goodsService->serviceUpGoodsFirst($id);
         //品牌表
         $brandService = new BrandService();
         $brand = $brandService->serviceBrandList();
@@ -124,9 +124,9 @@ class GoodsController extends Controller
      */
     public function goodsStatus(Request $request)
     {
-        $goods_id = $request->post('goods_id');
+        $id = $request->post('id');
         $goodsService = new GoodsService();
-        $data = $goodsService->serviceGoodsStatus($goods_id);
+        $data = $goodsService->serviceGoodsStatus($id);
         if($data){
             return $this->goodsList();
         } else {

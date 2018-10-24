@@ -77,9 +77,9 @@ class CategoryController extends Controller
      */
     public function categoryDel(Request $request)
     {
-        $cat_id = $request->post('cat_id');
+        $t_id = $request->post('t_id');
         $categoryService = new CategoryService();
-        $data = $categoryService->serviceDelCategory($cat_id);
+        $data = $categoryService->serviceDelCategory($t_id);
         if($data){
             return $this->categoryList();
         } else {
@@ -90,10 +90,10 @@ class CategoryController extends Controller
     /*
      * 查出修改的那一条
      */
-    public function categoryUp($cat_id)
+    public function categoryUp($t_id)
     {
         $categoryService = new CategoryService();
-        $data = $categoryService->serviceUpCategoryFirst($cat_id);
+        $data = $categoryService->serviceUpCategoryFirst($t_id);
         $categoryAll = $categoryService->serviceCategoryList();
 
         return view('backend.category.categoryup',['data'=>$data,'categoryAll' => $categoryAll]);
