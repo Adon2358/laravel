@@ -115,27 +115,4 @@
     </script>
 @stop
 
-{{--1	管理员管理	admin	fa fa-share			0	1	1--}}
-{{--2	管理员列表	admin/adminlist				1	1	1-2--}}
-{{--3	添加管理员	admin/adminadd				1	1	1-3--}}
-{{--4	删除管理员	admin/admindel				1	0	1-4--}}
-{{--5	编辑管理员	admin/adminup				1	0	1-5--}}
-{{--6	角色管理	role	fa fa-share			0	1	6--}}
-{{--7	角色列表	role/rolelist				6	1	6-7--}}
-{{--8	添加角色	role/roleadd				6	1	6-8--}}
-{{--9	删除角色	role/roledel	fa fa-circle-o			6	0	6-9--}}
-{{--10	编辑角色	role/roleup				6	0	6-10--}}
-{{--11	菜单管理	menu	fa fa-share			0	1	11--}}
-{{--12	菜单列表	menu/menulist				11	1	11-12--}}
-{{--13	添加菜单	menu/menuadd				11	1	11-13--}}
-{{--14	删除菜单	menu/menudel				11	0	11-14--}}
-{{--15	编辑菜单	menu/menuup				11	0	11-15--}}
-{{--16	按钮管理	button	fa fa-share			0	1	16--}}
-{{--17	按钮列表	button/buttonlist				16	1	16-17--}}
-{{--18	添加按钮	button/buttonadd				16	1	16-18--}}
-{{--19	删除按钮	button/buttondel				16	0	16-20--}}
-{{--20	编辑按钮	button/buttonup				16	0	16-21--}}
-{{--21	个人中心	self	fa fa-circle-o			0	1	21--}}
-{{--22	修改密码	self/setpwd				21	1	21-22--}}
-
 
