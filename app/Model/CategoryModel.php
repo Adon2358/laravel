@@ -5,9 +5,9 @@ namespace App\Model;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class IndexTypeModel extends Model
+class CategoryModel extends Model
 {
-    protected $table = 'index_type';
+    protected $table = 'category';
 
     public $timestamps = false;
 
@@ -16,7 +16,7 @@ class IndexTypeModel extends Model
      */
     public function getType()
     {
-        $getType = DB::table('index_type')->get();
+        $getType = DB::table('category')->get();
 
         return $getType;
     }
@@ -26,7 +26,7 @@ class IndexTypeModel extends Model
      */
     public function getAllCategory()
     {
-        $data = $this->get();
+        $data = $this->orderBy('path')->where('is_delete',1)->get();
 
         return $data;
     }
@@ -36,7 +36,7 @@ class IndexTypeModel extends Model
      */
     public function delFirstCategory($t_id)
     {
-        $data = $this->where('t_id',$t_id)->delete();
+        $data = $this->where('t_id',$t_id)->update(['is_delete'=>0]);
 
         return $data;
     }
@@ -90,5 +90,7 @@ class IndexTypeModel extends Model
 
         return $data;
     }
+
+
 
 }

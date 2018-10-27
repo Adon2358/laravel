@@ -34,8 +34,12 @@
 
                 <div class="col-sm-10">
                     <select name="p_id" id="" class="form-control">
+                        <option value="0">请选择</option>
                         @foreach($res as $k=>$v)
-                                <option value="{{$k}}">{{str_repeat('|-',substr_count($v['path'],'-'))}}{{$v['text']}}</option>
+                            @if($v['m_id'] == $data->p_id)
+                                <option value="{{$v['m_id']}}" selected>{{str_repeat('|-',substr_count($v['path'],'-'))}}{{$v['text']}}</option>
+                            @endif
+                                <option value="{{$v['m_id']}}">{{str_repeat('|-',substr_count($v['path'],'-'))}}{{$v['text']}}</option>
                         @endforeach
                     </select>
                 </div>

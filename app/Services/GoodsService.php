@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Model\ShopModel;
+use App\Model\GoodsModel;
+use App\Model\GoodsAttrModel;
 
 class GoodsService
 {
@@ -11,7 +12,7 @@ class GoodsService
      */
     public function serviceGoodsList()
     {
-        $goodsModel = new ShopModel();
+        $goodsModel = new GoodsModel();
         $data = $goodsModel->getAllGoods();
 
         return $data;
@@ -20,42 +21,74 @@ class GoodsService
     /*
      * 添加商品
      */
-    public function serviceGoodsAdd($data)
+    public function serviceGoodsAdd($request)
     {
+        $data = $request->post();
+        $fileName = $this->postFileupload($request);
         $arr = [
-            'cat_id' => $data['cat_id'],
-            'sn' => rand(1000,9000).time(),
-            'name' => $data['name'],
-            'brand_id' => $data['brand_id'],
-            'number' => $data['number'],
-            'price' => $data['price'],
-            'desc' => $data['desc'],
-            'img' => $data['img'],
-            'add_time' => time(),
-            'is_top_down' => $data['is_top_down'],
+            'goods_name' => $data['goods_name'],
+            'goods_number' => $data['goods_number'],
+            'goods_price' => $data['goods_price'],
+            'promotion_price' => $data['promotion_price'],
             'yh' => $data['yh'],
-            'comment' => $data['comment'],
+            'goods_desc' => $data['goods_desc'],
+            't_id' => $data['t_id'],
+            'attr_id' => $data['attr_id'],
+            'attr_value_id' => $data['attr_value_id'],
+            'is_sale' => $data['is_sale'],
+            'goods_sn' => rand(1000,9000).time(),
+            'goods_img' => $fileName,
+            'create_time' => time(),
+            'is_new' => $data['is_new'],
+            'is_delete' => 1,
         ];
         //检查表中是否有同名商品有则库存相加
-        $goodsModel = new ShopModel();
-        $goodsExist = $goodsModel->goodsNameExist($arr['name']);
+        $goodsModel = new GoodsModel();
+        $goodsExist = $goodsModel->goodsNameExist($arr['goods_name']);
         if($goodsExist)
         {
             $data = $goodsModel->updateGoods($goodsExist,$arr);
         }else{
-            $data = $goodsModel->addGoods($arr);
+            $goods_id = $goodsModel->addGoods($arr);
+            $attr = [
+                'goods_id' =>$goods_id,
+                'attr_id' => $data['attr_id'],
+                'attr_value_id' => $data['attr_value_id'],
+            ];
+            $goodsAttr = new GoodsAttrModel();
+            $data = $goodsAttr->addGoodsAttr($attr);
         }
 
         return $data;
+    }
+    //文件上传处理
+    public function postFileupload($request){
+        //判断请求中是否包含name=file的上传文件
+        if(!$request->hasFile('goods_img')){
+            exit('上传文件为空！');
+        }
+        $file = $request->file('goods_img');
+        //判断文件上传过程中是否出错
+        if(!$file->isValid()){
+            exit('文件上传出错！');
+        }
+        $destPath = realpath(public_path('image'));
+        if(!file_exists($destPath))
+            mkdir($destPath,0755,true);
+        $filename = $file->getClientOriginalName();
+        if(!$file->move($destPath,$filename)){
+            exit('保存文件失败！');
+        }
+        return './image'.'/'.$filename;
     }
 
     /*
      * 删除商品
      */
-    public function serviceDelGoods($id)
+    public function serviceDelGoods($goods_id)
     {
-        $goodsModel = new ShopModel();
-        $data = $goodsModel->delFirstGoods($id);
+        $goodsModel = new GoodsModel();
+        $data = $goodsModel->delFirstGoods($goods_id);
 
         return $data;
     }
@@ -63,10 +96,10 @@ class GoodsService
     /*
      * 查出修改的那一条商品
      */
-    public function serviceUpGoodsFirst($id)
+    public function serviceUpGoodsFirst($goods_id)
     {
-        $goodsModel = new ShopModel();
-        $upGoodsFirst = $goodsModel->getUpStatusGoods($id)->toarray();
+        $goodsModel = new GoodsModel();
+        $upGoodsFirst = $goodsModel->getUpStatusGoods($goods_id)->toarray();
 
         return $upGoodsFirst;
     }
@@ -74,22 +107,29 @@ class GoodsService
     /*
      * 处理修改数据
      */
-    public function serviceUpDoGoodsFirst($data)
+    public function serviceUpDoGoodsFirst($request)
     {
-        $id = $data['id'];
+        $data = $request->post();
+        $goods_id = $data['goods_id'];
+        $fileName = $this->postFileupload($request);
         $arr = [
-            'cat_id' => $data['cat_id'],
-            'name' => $data['name'],
-            'brand_id' => $data['brand_id'],
-            'number' => $data['number'],
-            'price' => $data['price'],
-            'desc' => $data['desc'],
-            'img' => $data['img'],
-            'add_time' => time(),
-            'is_top_down' => $data['is_top_down'],
+            'goods_name' => $data['goods_name'],
+            'goods_number' => $data['goods_number'],
+            'goods_price' => $data['goods_price'],
+            'promotion_price' => $data['promotion_price'],
+            'yh' => $data['yh'],
+            'goods_desc' => $data['goods_desc'],
+            't_id' => $data['t_id'],
+            'attr_id' => $data['attr_id'],
+            'attr_value_id' => $data['attr_value_id'],
+            'is_sale' => $data['is_sale'],
+            'goods_img' => $fileName,
+            'update_time' => time(),
+            'is_new' => $data['is_new'],
+            'is_delete' => 1,
         ];
-        $goodsModel = new ShopModel();
-        $upGoodsFirst = $goodsModel->upFirstGoods($arr,$id);
+        $goodsModel = new GoodsModel();
+        $upGoodsFirst = $goodsModel->upFirstGoods($arr,$goods_id);
 
         return $upGoodsFirst;
     }
@@ -97,17 +137,17 @@ class GoodsService
     /*
      * 上架/下架
      */
-    public function serviceGoodsStatus($id)
+    public function serviceGoodsStatus($goods_id)
     {
-        $goodsModel = new ShopModel();
+        $goodsModel = new GoodsModel();
         //查出那一条数据
-        $res = $goodsModel->getUpStatusGoods($id)->toarray();
-        if($res['is_top_down'] == 1)
+        $res = $goodsModel->getUpStatusGoods($goods_id);
+        if($res['is_sale'] == 1)
         {
-            $data = $goodsModel->goodsDown($id);
+            $data = $goodsModel->goodsDown($goods_id);
             return $data;
         }else{
-            $data = $goodsModel->goodsTop($id);
+            $data = $goodsModel->goodsTop($goods_id);
             return $data;
         }
     }

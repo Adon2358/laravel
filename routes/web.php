@@ -177,26 +177,6 @@ Route::group(['namespace' => 'Admin','prefix' => '/goods'],function(){
 });
 
 /*
- * 品牌
- */
-Route::group(['namespace' => 'Admin','prefix' => '/brand'],function(){
-
-    //展示品牌
-    Route::get('/brandlist', 'BrandController@brandList');
-    //添加品牌
-    Route::get('/brandadd', 'BrandController@brandAdd');
-    //处理添加数据
-    Route::post('/brandadddo', 'BrandController@brandAddDo');
-    //删除品牌
-    Route::post('/branddel', 'BrandController@brandDel');
-    //查出修改的那一条
-    Route::get('/brandup/brand_id/{brand_id}', 'BrandController@brandUp');
-    //修改数据
-    Route::post('/brandupdo', 'BrandController@brandUpDo');
-
-});
-
-/*
  * 分类
  */
 Route::group(['namespace' => 'Admin','prefix' => '/category'],function(){
@@ -213,6 +193,46 @@ Route::group(['namespace' => 'Admin','prefix' => '/category'],function(){
     Route::get('/categoryup/cat_id/{cat_id}', 'CategoryController@categoryUp');
     //修改数据
     Route::post('/categoryupdo', 'CategoryController@categoryUpDo');
+
+});
+
+/*
+ * 属性
+ */
+Route::group(['namespace' => 'Admin','prefix' => '/attribute'],function(){
+
+    //展示属性
+    Route::get('/attributelist', 'AttributeController@attributeList');
+    //添加属性
+    Route::get('/attributeadd', 'AttributeController@attributeAdd');
+    //处理添加数据
+    Route::post('/attributeadddo', 'AttributeController@attributeAddDo');
+    //删除属性
+    Route::post('/attributedel', 'AttributeController@attributeDel');
+    //查出修改的那一条
+    Route::get('/attributeup/attr_id/{attr_id}', 'AttributeController@attributeUp');
+    //修改数据
+    Route::post('/attributeupdo', 'AttributeController@attributeUpDo');
+
+});
+
+/*
+ * 属性值
+ */
+Route::group(['namespace' => 'Admin','prefix' => '/attrvalue'],function(){
+
+    //展示属性
+    Route::get('/attrvaluelist', 'AttrvalueController@attrvalueList');
+    //添加属性
+    Route::get('/attrvalueadd', 'AttrvalueController@attrvalueAdd');
+    //处理添加数据
+    Route::post('/attrvalueadddo', 'AttrvalueController@attrvalueAddDo');
+    //删除属性
+    Route::post('/attrvaluedel', 'AttrvalueController@attrvalueDel');
+    //查出修改的那一条
+    Route::get('/attrvalueup/attr_value_id/{attr_value_id}', 'AttrvalueController@attrvalueUp');
+    //修改数据
+    Route::post('/attrvalueupdo', 'AttrvalueController@attrvalueUpDo');
 
 });
 

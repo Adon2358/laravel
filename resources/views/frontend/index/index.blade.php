@@ -53,7 +53,7 @@
 								<div>
 									<div class="xuangou_left fl">
 										<a href="">
-											<div class="img fl"><img src="{{$value['t_img']}}" alt=""></div>
+											<div class="img fl"><img src="{{URL::asset($value['t_img'])}}" alt=""></div>
 											<span class="fl">{{$value['t_name']}}</span>
 											<div class="clear"></div>
 										</a>
@@ -101,10 +101,10 @@
 			<div class="main center">
 				@foreach($singleGoods as $k=>$va)
 				<div class="mingxing fl">
-					<div class="sub_mingxing"><a href=""><img src="{{$va['img']}}" alt=""></a></div>
-					<div class="pinpai"><a href="">{{$va['name']}}</a></div>
+					<div class="sub_mingxing"><a href=""><img src="{{URL::asset($va['goods_img'])}}" alt=""></a></div>
+					<div class="pinpai"><a href="">{{$va['goods_name']}}</a></div>
 					<div class="youhui">{{$va['yh']}}</div>
-					<div class="jiage">{{$va['price']}}元起</div>
+					<div class="jiage">{{$va['goods_price']}}元起</div>
 				</div>
 				@endforeach
 		</div>
@@ -115,10 +115,10 @@
 					@foreach($partGoods as $k=>$val)
 					<div class="remen fl">
 						<div class="xinpin"><span>新品</span></div>
-						<div class="tu"><a href=""><img src="{{$val['img']}}"></a></div>
-						<div class="miaoshu"><a href="">{{$val['name']}}</a></div>
-						<div class="jiage">{{$val['price']}}元</div>
-						<div class="pingjia">{{$val['comment']}}人评价</div>
+						<div class="tu"><a href=""><img src="{{URL::asset($val['goods_img'])}}"></a></div>
+						<div class="miaoshu"><a href="">{{$val['goods_name']}}</a></div>
+						<div class="jiage">{{$val['goods_price']}}元</div>
+						<div class="pingjia">{{$val['comment_num']}}人评价</div>
 						<div class="piao">
 							<a href="">
 								<span>发货速度很快！很配小米6！</span>

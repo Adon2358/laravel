@@ -23,7 +23,9 @@
             <tr>
                 <td>{{$v['t_id']}}</td>
                 <td>{{str_repeat('|-',substr_count($v['path'],'-'))}}{{$v['t_name']}}</td>
-                <td><img src="{{URL::asset($v['t_img'])}}" alt="" width="30px" height="30px"></td>
+                <td>
+                    <a href="{{$v['t_url']}}"> <img src="{{URL::asset($v['t_img'])}}" alt="" width="30px" height="30px"></a>
+                </td>
                 <td>{{$v['p_id']}}</td>
                 <td>{{$v['path']}}</td>
                 <td>
