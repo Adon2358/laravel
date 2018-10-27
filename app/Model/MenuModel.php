@@ -24,7 +24,7 @@ class MenuModel extends Model
      */
     public function getAllMenu()
     {
-        $data = $this->get();
+        $data = $this->orderBy('path')->get();
 
         return $data;
     }

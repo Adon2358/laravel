@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\CategoryService;
+use App\Services\AttributeService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -28,7 +29,10 @@ class CategoryController extends Controller
         $categoryService = new CategoryService();
         $data = $categoryService->serviceCategoryList();
 
-        return view('backend.category.categoryadd',['data'=>$data]);
+        $attributeService = new AttributeService();
+        $attribute = $attributeService->serviceAttributeList();
+
+        return view('backend.category.categoryadd',['data'=>$data,'attribute'=>$attribute]);
     }
 
     /*
@@ -39,9 +43,11 @@ class CategoryController extends Controller
      */
     public function categoryAddDo(Request $request)
     {
-        $data = $request->post();
+        $this->validate($request,[
+            't_name' => 'required',
+        ]);
         $categoryService = new CategoryService();
-        $data = $categoryService->serviceCategoryAdd($data);
+        $data = $categoryService->serviceCategoryAdd($request);
         switch ($data)
         {
             case 1:
@@ -104,9 +110,8 @@ class CategoryController extends Controller
      */
     public function categoryUpDo(Request $request)
     {
-        $data = $request->post();
         $categoryService = new CategoryService();
-        $res = $categoryService->serviceUpDoCategoryFirst($data);
+        $res = $categoryService->serviceUpDoCategoryFirst($request);
         if($res) {
             return redirect('/prompt')->with([
                 'message'=>'修改分类成功！',

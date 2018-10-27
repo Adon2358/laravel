@@ -2,29 +2,29 @@
 
 @extends('adminlte::page')
 
-@section('title', '品牌列表')
+@section('title', '属性值列表')
 
 @section('content_header')
-    <h1>品牌列表</h1>
+    <h1>属性值列表</h1>
 @stop
 
 @section('content')
 
     <table class="table table-hover">
         <tr>
-            <td>品牌ID</td>
-            <td>品牌名称</td>
-            <td>品牌LoGo</td>
+            <td>属性值ID</td>
+            <td>属性值名称</td>
+            <td>属性</td>
             <td>操作</td>
         </tr>
         @foreach($data as $k=>$v)
             <tr>
-                <td>{{$v['brand_id']}}</td>
-                <td>{{$v['brand_name']}}</td>
-                <td><img src="{{URL::asset($v['brand_logo'])}}" alt="" width="30px" height="30px"></td>
+                <td>{{$v['attr_value_id']}}</td>
+                <td>{{$v['attr_value_name']}}</td>
+                <td>{{$v['attr_name']}}</td>
                 <td>
-                     <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['brand_id']}}"></a>
-                     <a href="brandup/brand_id/{{$v['brand_id']}}" class="fa fa-fw fa-edit"></a>
+                     <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['attr_value_id']}}"></a>
+                     <a href="attrvalueup/attr_value_id/{{$v['attr_value_id']}}" class="fa fa-fw fa-edit"></a>
                 </td>
             </tr>
         @endforeach
@@ -40,17 +40,17 @@
     <script>
 
         $(".del").click(function(){
-            var brand_id = $(this).attr('id');
+            var attr_value_id = $(this).attr('id');
             $.ajax({
                 type: "post",
-                url: "branddel",
-                data: {brand_id:brand_id,'_token':'{{csrf_token()}}'},
+                url: "attrvaluedel",
+                data: {attr_value_id:attr_value_id,'_token':'{{csrf_token()}}'},
                 success: function(msg){
                     if(msg){
                         $("body").html(msg);
                     }else{
                         alert("删除失败");
-                        location.href='brandlist';
+                        location.href='attrvaluelist';
                     }
                 }
             });

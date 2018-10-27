@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-    <form class="form-horizontal" action="{{url('category/categoryadddo')}}" method="post">
+    <form class="form-horizontal" action="{{url('category/categoryadddo')}}" method="post" enctype="multipart/form-data">
         {{csrf_field()}}
         <div class="box-body">
             <div class="form-group">
@@ -33,13 +33,19 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">分类url</label>
+
+                <div class="col-sm-10">
+                    <input type="text" name="t_url" class="form-control" id="inputPassword3"  placeholder="分类url">
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">分类图片</label>
 
                 <div class="col-sm-10">
-                    <input type="text" name="t_img" class="form-control" id="inputPassword3"  placeholder="分类图片">
+                    <input type="file" name="t_img" class="form-control" id="inputPassword3"  placeholder="分类图片">
                 </div>
             </div>
-
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

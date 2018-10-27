@@ -14,11 +14,10 @@ class IndexController extends  Controller
     {
         $service = new IndexService();
         $navigation  = $service->serviceIndex();
-
         $singleGoods = $navigation['singleGoods'];
         $partGoods = $navigation['partGoods'];
         $indexType = $navigation['indexType'];
-//dd($indexType);
+
         unset($navigation['singleGoods']);
         unset($navigation['partGoods']);
         unset($navigation['indexType']);

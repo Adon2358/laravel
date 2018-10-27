@@ -2,21 +2,21 @@
 namespace App\Services;
 
 use App\Model\NavigationModel;
-use App\Model\ShopModel;
-use App\Model\IndexTypeModel;
+use App\Model\GoodsModel;
+use App\Model\CategoryModel;
 use Illuminate\Support\Facades\Redis;
 
 class IndexService
 {
     public $navigationModel;
-    public $shopModel;
-    public $indexTypeModel;
+    public $goodsModel;
+    public $categoryModel;
 
     public function __construct()
     {
         $this->navigationModel = new NavigationModel();
-        $this->shopModel = new ShopModel();
-        $this->indexTypeModel = new IndexTypeModel();
+        $this->goodsModel = new GoodsModel();
+        $this->categoryModel = new CategoryModel();
     }
 
     /*
@@ -28,11 +28,12 @@ class IndexService
             //导航
             $navigation = $this->navigationModel->navigationModel();
             //shop小米明星单品
-            $singleGoods= $this->shopModel->getModelShopStatus(1);
+            $singleGoods= $this->goodsModel->getModelShopStatus(1);
             //shop配件
-            $partGoods = $this->shopModel->getModelShopStatus(2);
+            $partGoods = $this->goodsModel->getModelShopStatus(2,10);
             //首页分类
-            $getType =  $this->indexTypeModel->getType();
+            $getType =  $this->categoryModel->getType();
+
             $tree = $this->Tree($getType);
 
             $navigation['singleGoods'] = $singleGoods;

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\GoodsService;
-use App\Services\BrandService;
+use App\Services\AttributeService;
+use App\Services\AttrvalueService;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
@@ -27,12 +28,21 @@ class GoodsController extends Controller
      */
     public function goodsAdd()
     {
-        $brandService = new BrandService();
-        $brand = $brandService->serviceBrandList();
+        //商品分类
         $categoryService = new CategoryService();
         $category = $categoryService->serviceCategoryList();
+        //属性
+        $attributeService = new AttributeService();
+        $attribute = $attributeService->serviceAttributeList();
+        //属性值
+        $attrvalueService = new AttrvalueService();
+        $attrvalue = $attrvalueService->serviceAttrvalueList();
 
-        return view('backend.goods.goodsadd',['category'=>$category,'brand'=>$brand]);
+        return view('backend.goods.goodsadd',[
+            'category' => $category,
+            'attribute' => $attribute,
+            'attrvalue' => $attrvalue,
+        ]);
     }
 
     /*
@@ -40,9 +50,11 @@ class GoodsController extends Controller
      */
     public function goodsAddDo(Request $request)
     {
-        $data = $request->post();
+        $this->validate($request,[
+            'goods_name' => 'required',
+        ]);
         $goodsService = new GoodsService();
-        $data = $goodsService->serviceGoodsAdd($data);
+        $data = $goodsService->serviceGoodsAdd($request);
         if($data) {
             return redirect('/prompt')->with([
                 'message'=>'添加/更新成功！',
@@ -65,9 +77,9 @@ class GoodsController extends Controller
      */
     public function goodsDel(Request $request)
     {
-        $id = $request->post('id');
+        $goods_id = $request->post('goods_id');
         $goodsService = new GoodsService();
-        $data = $goodsService->serviceDelGoods($id);
+        $data = $goodsService->serviceDelGoods($goods_id);
         if($data){
             return $this->goodsList();
         } else {
@@ -83,14 +95,21 @@ class GoodsController extends Controller
         //查出修改的那一条
         $goodsService = new GoodsService();
         $data = $goodsService->serviceUpGoodsFirst($id);
-        //品牌表
-        $brandService = new BrandService();
-        $brand = $brandService->serviceBrandList();
-        //分类表
+        //商品分类
         $categoryService = new CategoryService();
         $category = $categoryService->serviceCategoryList();
+        //属性
+        $attributeService = new AttributeService();
+        $attribute = $attributeService->serviceAttributeList();
+        //属性值
+        $attrvalueService = new AttrvalueService();
+        $attrvalue = $attrvalueService->serviceAttrvalueList();
 
-        return view('backend.goods.goodsup',['data'=>$data,'category'=>$category,'brand'=>$brand]);
+        return view('backend.goods.goodsup',[
+            'data' => $data,
+            'category' => $category,
+            'attribute' => $attribute,
+            'attrvalue' => $attrvalue,]);
     }
 
     /*
@@ -98,9 +117,8 @@ class GoodsController extends Controller
      */
     public function goodsUpDo(Request $request)
     {
-        $data = $request->post();
         $goodsService = new GoodsService();
-        $res = $goodsService->serviceUpDoGoodsFirst($data);
+        $res = $goodsService->serviceUpDoGoodsFirst($request);
         if($res) {
             return redirect('/prompt')->with([
                 'message'=>'修改商品成功！',
@@ -124,9 +142,9 @@ class GoodsController extends Controller
      */
     public function goodsStatus(Request $request)
     {
-        $id = $request->post('id');
+        $goods_id = $request->post('goods_id');
         $goodsService = new GoodsService();
-        $data = $goodsService->serviceGoodsStatus($id);
+        $data = $goodsService->serviceGoodsStatus($goods_id);
         if($data){
             return $this->goodsList();
         } else {
