@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use App\Services\IndexService;
+use App\Services\GoodsService;
 
 class IndexController extends  Controller
 {
@@ -32,17 +33,27 @@ class IndexController extends  Controller
     /*
      * 列表页
      */
-    public function list()
+    public function list($t_id)
     {
-        return view('frontend/index/list');
+        $goodsService = new GoodsService();
+        $goods = $goodsService->serviceCateIdGetGoods($t_id);
+
+        return view('frontend/index/list',[
+            'goods' => $goods,
+        ]);
     }
 
     /*
      * 详情页
      */
-    public function details()
+    public function details($goods_id)
     {
-        return view('frontend/index/details');
+        $goodsService = new GoodsService();
+        $goods = $goodsService->serviceUpGoodsFirst($goods_id);
+
+        return view('frontend/index/details',[
+            'goods' => $goods,
+        ]);
     }
 
 }

@@ -43,7 +43,7 @@ class AttrvalueModel extends Model
     }
 
     /*
-     * 添加此分类
+     * 添加此属性值
      */
     public function addAttrvalue($arr)
     {
@@ -63,6 +63,25 @@ class AttrvalueModel extends Model
     }
 
     /*
+     * 根据属性id查出所对应的属性值
+     */
+    public function attrIdGetAttrvalue($attr_id)
+    {
+        $data = $this->where('attr_id',$attr_id)->where('is_delete',1)->get();
+
+        return $data;
+    }
+
+    /*
+     * 根据属性id删除所对应的属性值
+     */
+    public function delAttrIdAttrvalue($attr_id)
+    {
+        $data = $this->where('attr_id',$attr_id)->where('is_delete',1)->delete();
+
+        return $data;
+    }
+    /*
      * 修改数据
      */
     public function upFirstAttrvalue($arr,$attr_value_id)
@@ -72,6 +91,25 @@ class AttrvalueModel extends Model
         return $data;
     }
 
+    /*
+     * 根据属性值id获取sku数据
+     */
+    public function attrvalueIdGetSku($attr_value_id)
+    {
+        $data = $this->whereIn('attr_value_id',$attr_value_id)->get();
+
+        return $data;
+    }
+
+    /*
+     * 添加商品时根据属性id查出所对应的属性值
+     */
+    public function addAttrIdAttrvalue($attr_id)
+    {
+        $data = $this->where('attr_id',$attr_id)->where('is_delete',1)->select('attr_value_id')->get();
+
+        return $data;
+    }
 
 
 }

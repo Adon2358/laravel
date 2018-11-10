@@ -20,7 +20,13 @@
                     <input type="text" name="attr_name" class="form-control" id="inputPassword3" value="{{$data['attr_name']}}" placeholder="属性名称">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">属性值</label>
 
+                <div class="col-sm-10">
+                    <input type="text" name="attr_value_name" class="form-control" id="inputPassword3" value="{{$attrvalue}}" placeholder="属性值">
+                </div>
+            </div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

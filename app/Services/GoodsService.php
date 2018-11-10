@@ -4,6 +4,9 @@ namespace App\Services;
 
 use App\Model\GoodsModel;
 use App\Model\GoodsAttrModel;
+use App\Model\AttrvalueModel;
+use App\Model\SkuModel;
+use DB;
 
 class GoodsService
 {
@@ -24,6 +27,22 @@ class GoodsService
     public function serviceGoodsAdd($request)
     {
         $data = $request->post();
+        $attr_value_id = $data['attr_value_id'];
+        $sku = [
+            'sku_name' => $data['sku_name'],
+            'sku_str' => $data['sku_str'],
+            'sku_inventor' => $data['sku_inventor'],
+            'sku_price' => $data['sku_price'],
+        ];
+        $skuList = [];
+        foreach($sku as $k=>$v){
+            foreach($v as $key=>$val){
+                $skuList[$key][$k] = $val;
+                $skuList[$key]['sku_no'] = rand(1000,9999).time();
+                $skuList[$key]['create_time'] = time();
+                $skuList[$key]['update_time'] = time();
+            }
+        }
         $fileName = $this->postFileupload($request);
         $arr = [
             'goods_name' => $data['goods_name'],
@@ -33,8 +52,6 @@ class GoodsService
             'yh' => $data['yh'],
             'goods_desc' => $data['goods_desc'],
             't_id' => $data['t_id'],
-            'attr_id' => $data['attr_id'],
-            'attr_value_id' => $data['attr_value_id'],
             'is_sale' => $data['is_sale'],
             'goods_sn' => rand(1000,9000).time(),
             'goods_img' => $fileName,
@@ -42,24 +59,44 @@ class GoodsService
             'is_new' => $data['is_new'],
             'is_delete' => 1,
         ];
-        //检查表中是否有同名商品有则库存相加
-        $goodsModel = new GoodsModel();
-        $goodsExist = $goodsModel->goodsNameExist($arr['goods_name']);
-        if($goodsExist)
-        {
-            $data = $goodsModel->updateGoods($goodsExist,$arr);
-        }else{
-            $goods_id = $goodsModel->addGoods($arr);
-            $attr = [
-                'goods_id' =>$goods_id,
-                'attr_id' => $data['attr_id'],
-                'attr_value_id' => $data['attr_value_id'],
-            ];
-            $goodsAttr = new GoodsAttrModel();
-            $data = $goodsAttr->addGoodsAttr($attr);
+        $result = true;
+        DB::beginTransaction();
+        try{
+            //检查表中是否有同名商品有则库存相加
+            $goodsModel = new GoodsModel();
+            $goodsExist = $goodsModel->goodsNameExist($arr['goods_name']);
+            if($goodsExist)
+            {
+                $goodsModel->updateGoods($goodsExist,$arr);
+            }else{
+                $goods_id = $goodsModel->addGoods($arr);
+                $attrAndAttrvalueId = [];
+                foreach ($attr_value_id as $key => $value) {
+                    foreach ($value as $k => $v) {
+                        $attrAndAttrvalueId[] = [
+                            'goods_id'=> $goods_id,
+                            'attr_id'=>$key,
+                            'attr_value_id'=>$v
+                        ];
+                    }
+                }
+                $goodsAttr = new GoodsAttrModel();
+                $goodsAttr->addGoodsAttr($attrAndAttrvalueId);
+                //添加sku
+                $skuModel = new SkuModel();
+                $skuModel->addSku($skuList);
+            }
+            DB::commit();
+        }catch(\Exception $e){
+            $result = false;
+            $e->getMessage();
+            DB::rollBack();
         }
-
-        return $data;
+        if($result){
+            return true;
+        }else{
+            return false;
+        }
     }
     //文件上传处理
     public function postFileupload($request){
@@ -151,4 +188,16 @@ class GoodsService
             return $data;
         }
     }
+
+    /*
+     * 点击分类下的的子分类查出相对应的商品
+     */
+    public function serviceCateIdGetGoods($t_id)
+    {
+        $goodsModel = new GoodsModel();
+        $goods = $goodsModel->CateIdGetGoods($t_id)->toarray();
+
+        return $goods;
+    }
+
 }

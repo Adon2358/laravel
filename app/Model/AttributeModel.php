@@ -47,7 +47,7 @@ class AttributeModel extends Model
      */
     public function addAttribute($arr)
     {
-        $data = $this->insert($arr);
+        $data = $this->insertGetId($arr);
 
         return $data;
     }
@@ -68,6 +68,16 @@ class AttributeModel extends Model
     public function upFirstAttribute($arr,$attr_id)
     {
         $data = $this->where('attr_id',$attr_id)->update($arr);
+
+        return $data;
+    }
+
+    /*
+     * 根据关系表中的attr_id查出attribute表中对应的名称
+     */
+    public function attrIdGetAttributeName($attr_id)
+    {
+        $data = $this->whereIn('attr_id',$attr_id)->where('is_delete',1)->get();
 
         return $data;
     }

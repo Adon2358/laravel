@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\AttributeService;
+use App\Services\AttrvalueService;
 use Illuminate\Http\Request;
 
 class AttributeController extends Controller
@@ -35,7 +36,7 @@ class AttributeController extends Controller
      * 处理添加数据
      * return 1  添加成功
      * return 2  此属性名已存在
-     * return 3  添加失败
+     * return 3  添加属性值失败
      */
     public function attributeAddDo(Request $request)
     {
@@ -49,7 +50,7 @@ class AttributeController extends Controller
         {
             case 1:
                 return redirect('/prompt')->with([
-                    'message'=>'添加成功！',
+                    'message'=>'添加属性+属性值成功！',
                     'url' =>'attribute/attributelist',
                     'jumpTime'=>3,
                     'status'=>true,
@@ -65,7 +66,7 @@ class AttributeController extends Controller
                 break;
             case 3:
                 return redirect('/prompt')->with([
-                    'message'=>'添加失败！',
+                    'message'=>'添加属性值失败！',
                     'url' =>'attribute/attributelist',
                     'jumpTime'=>3,
                     'status'=>false,
@@ -98,7 +99,12 @@ class AttributeController extends Controller
         $attributeService = new AttributeService();
         $data = $attributeService->serviceUpAttributeFirst($t_id);
 
-        return view('backend.attribute.attributeup',['data'=>$data]);
+        $attrvalueService = new AttrvalueService();
+        $attrValue = $attrvalueService->serviceAttrIdGetAttrvalue($t_id);
+        $arr = $attrValue[0];
+        $attrvalue = implode(' ',$arr);
+
+        return view('backend.attribute.attributeup',['data'=>$data,'attrvalue' => $attrvalue]);
     }
 
     /*

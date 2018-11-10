@@ -40,10 +40,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">分类图片</label>
-
+                <label for="exampleInputEmail1" class="col-sm-2 control-label">商品图片：</label>
                 <div class="col-sm-10">
-                    <input type="file" name="t_img" class="form-control" id="inputPassword3"  placeholder="分类图片">
+                    <input type="file" name="t_img" id="type_img" style="width:250px;height:150px;position:absolute;opacity:0;">
+                    <img class="thumb" style="width:200px;height:150px;border-radius:25px;" src="" alt="">
                 </div>
             </div>
         </div>
@@ -60,5 +60,18 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        // console.log('Hi!');
+        $(function(){
+            var TypeImg = $('input:file').attr('t_img');
+            if (TypeImg) {
+                $('.thumb').attr('src','/image'+TypeImg);
+            } else {
+                $('.thumb').attr('src','/image/file.png');
+            }
+            $("#type_img").change(function(){
+                $(".thumb").attr("src",URL.createObjectURL($(this)[0].files[0]));
+            });
+        });
+    </script>
 @stop

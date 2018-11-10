@@ -16,6 +16,7 @@
             <td>分类名称</td>
             <td>分类图片</td>
             <td>上级分类</td>
+            <td>属性</td>
             <td>Path</td>
             <td>操作</td>
         </tr>
@@ -27,6 +28,11 @@
                     <a href="{{$v['t_url']}}"> <img src="{{URL::asset($v['t_img'])}}" alt="" width="30px" height="30px"></a>
                 </td>
                 <td>{{$v['p_id']}}</td>
+                <td>
+                    @if($v['p_id'] != 0)
+                    <button type="button" class="btn btn-block btn-warning allot_attribute" value="{{$v['t_id']}}">分配属性</button>
+                    @endif
+                </td>
                 <td>{{$v['path']}}</td>
                 <td>
                      <a href="javascript:void(0)" class="fa fa-fw fa-close del" id="{{$v['t_id']}}"></a>
@@ -60,6 +66,25 @@
                     }
                 }
             });
+        });
+
+        $(".allot_attribute").click(function(){
+
+            var t_id = $(this).val();
+            $.ajax({
+                type: "post",
+                url: "allotattribute",
+                data: {t_id:t_id,'_token':'{{csrf_token()}}'},
+                success: function(msg){
+                    if(msg){
+                        $("body").html(msg);
+                    }else{
+                        alert("分配属性失败");
+                        location.href='categorylist';
+                    }
+                }
+            });
+
         });
 
     </script>
