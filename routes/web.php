@@ -22,9 +22,9 @@ Route::get('/php',function(){
 //首页
 Route::get('index/index','Index\IndexController@index');
 //列表
-Route::get('index/list','Index\IndexController@list');
+Route::get('index/list/t_id/{t_id}','Index\IndexController@list');
 //详情页
-Route::get('index/details','Index\IndexController@details');
+Route::get('index/details/goods_id/{goods_id}','Index\IndexController@details');
 
 /*
  * CartController
@@ -173,6 +173,15 @@ Route::group(['namespace' => 'Admin','prefix' => '/goods'],function(){
     Route::post('/goodsupdo', 'GoodsController@goodsUpDo');
     //商品上架/下架
     Route::post('/goodsstatus', 'GoodsController@goodsStatus');
+    //通过分类的id获取到对应的属性
+    Route::post('/cateidgetattr', 'GoodsController@cateIdGetAttr');
+    //通过属性的id获取到对应的属性值
+    Route::post('/attridgetattrvalue', 'GoodsController@attrIdGetAttrvalue');
+    //通过失焦事情添加自定义属性值
+    Route::post('/addattrvaluename', 'GoodsController@addAttrValueName');
+    //通过属性值id获取sku
+    Route::post('/attridgetsku', 'GoodsController@attridGetSku');
+
 
 });
 
@@ -193,6 +202,11 @@ Route::group(['namespace' => 'Admin','prefix' => '/category'],function(){
     Route::get('/categoryup/cat_id/{cat_id}', 'CategoryController@categoryUp');
     //修改数据
     Route::post('/categoryupdo', 'CategoryController@categoryUpDo');
+    //分类分配属性
+    Route::post('/allotattribute', 'CategoryController@allotAttributeAdd');
+    //分类分配属性
+    Route::post('/allotattributeup', 'CategoryController@allotAttributeUp');
+
 
 });
 

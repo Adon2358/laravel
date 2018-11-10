@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Services\CategoryService;
 use App\Services\AttributeService;
+use App\Services\CategoryAttributeService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -122,6 +123,55 @@ class CategoryController extends Controller
         } else {
             return redirect('/prompt')->with([
                 'message'=>'修改分类失败！',
+                'url' =>'category/categorylist',
+                'jumpTime'=>3,
+                'status'=>false
+            ]);
+        }
+    }
+
+    /*
+     * 分配属性
+     */
+    public function allotAttributeAdd(Request $request)
+    {
+        $t_id = $request->post('t_id');
+        //分类
+        $categoryService = new CategoryService();
+        $cate = $categoryService->serviceAllotAttribute($t_id);
+        //属性表
+        $attributeService = new AttributeService();
+        $attribute = $attributeService->serviceAttributeList();
+        //分类属性表
+        $cateAttrService = new CategoryAttributeService();
+        $cateAttr = $cateAttrService->serviceAllCategoryAttributeList($t_id);
+        $categoryAttribute = array_column($cateAttr,'attr_id');
+
+        return view('backend.category.allotAttributeAdd',[
+            'cate' => $cate,
+            'attribute' => $attribute,
+            'categoryAttribute' => $categoryAttribute,
+        ]);
+    }
+
+    /*
+     * 修改分类的属性
+     */
+    public function allotAttributeUp(Request $request)
+    {
+        $data = $request->post();
+        $categoryService = new CategoryService();
+        $cateAttr = $categoryService->serviceUpAllotAttribute($data);
+        if($cateAttr) {
+            return redirect('/prompt')->with([
+                'message'=>'分配属性成功！',
+                'url' =>'category/categorylist',
+                'jumpTime'=>3,
+                'status'=>true
+            ]);
+        } else {
+            return redirect('/prompt')->with([
+                'message'=>'分配属性失败！',
                 'url' =>'category/categorylist',
                 'jumpTime'=>3,
                 'status'=>false

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Model\AttrvalueModel;
+use DB;
 
 class AttrvalueService
 {
@@ -41,7 +42,7 @@ class AttrvalueService
             'attr_id' => $data['attr_id'],
             'is_delete' => 1,
         ];
-        //检查表中是否有同名属性
+        //检查表中是否有同名属性值
         $AttrvalueModel = new AttrvalueModel();
         $attrvalueExist = $AttrvalueModel->attrvalueNameExist($arr['attr_value_name']);
         if($attrvalueExist)
@@ -69,6 +70,31 @@ class AttrvalueService
     }
 
     /*
+     * 根据属性id查出所对应的属性值
+     */
+    public function serviceAttrIdGetAttrvalue($attr_id)
+    {
+        $attrvalueModel = new AttrvalueModel();
+        $attrValue = $attrvalueModel->attrIdGetAttrvalue($attr_id)->toarray();
+        $attrvalue[] = array_column($attrValue,'attr_value_name');
+
+        return $attrvalue;
+    }
+
+    /*
+     * 根据属性id查出所对应的属性值
+     */
+    public function serviceAttrIdGetAttrvalueName($attr_id)
+    {
+        $attrvalueModel = new AttrvalueModel();
+        $attrValue = $attrvalueModel->attrIdGetAttrvalue($attr_id)->toarray();
+
+        return $attrValue;
+    }
+
+
+
+    /*
      * 处理修改数据
      */
     public function serviceUpDoAttrvalueFirst($data)
@@ -83,5 +109,6 @@ class AttrvalueService
 
         return $upAttrvalueFirst;
     }
+
 
 }

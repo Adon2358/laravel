@@ -122,4 +122,14 @@ class GoodsModel extends Model
         return $data;
     }
 
+    /*
+     * 根据点击分类下的子分类获取对应的商品
+     */
+    public function CateIdGetGoods($t_id)
+    {
+        $data =  $this->where('t_id',$t_id)->where('is_delete',1)->get();
+
+        return $data;
+    }
+
 }

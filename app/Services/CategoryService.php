@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Model\AttributeModel;
 use App\Model\CategoryModel;
+use App\Model\CategoryAttributeModel;
 use Illuminate\Http\Request;
+use DB;
 
 class CategoryService
 {
@@ -122,6 +125,51 @@ class CategoryService
         $upBrandFirst = $categoryModel->upFirstCategory($arr,$t_id);
 
         return $upBrandFirst;
+    }
+
+    /*
+     * 分类属性
+     */
+    public function serviceAllotAttribute($t_id)
+    {
+        $categoryModel = new CategoryModel();
+        $cate = $categoryModel->upCategoryFirst($t_id)->toarray();
+
+        return $cate;
+    }
+
+    /*
+     * 修改分类属性
+     */
+    public function serviceUpAllotAttribute($data)
+    {
+        $t_id =  $data['t_id'];
+        $attrId = $data['attr_id'];
+        $arr = [];
+        foreach ($attrId as $k=>$v)
+        {
+            $arr[] = [
+                't_id' => $t_id,
+                'attr_id' => $v,
+            ];
+        }
+        $result = true;
+        DB::beginTransaction();
+        try{
+            $cateAttributeModel = new CategoryAttributeModel();
+            $cateAttributeModel->delCategoryAttribute($t_id);
+            $cateAttributeModel->AddCategoryAttribute($arr);
+            DB::commit();
+        }catch(\Exception $e){
+            $result = false;
+            $e->getMessage();
+            DB::rollBack();
+        }
+        if($result){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

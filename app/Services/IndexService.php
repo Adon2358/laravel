@@ -33,9 +33,7 @@ class IndexService
             $partGoods = $this->goodsModel->getModelShopStatus(2,10);
             //首页分类
             $getType =  $this->categoryModel->getType();
-
             $tree = $this->Tree($getType);
-
             $navigation['singleGoods'] = $singleGoods;
             $navigation['partGoods'] = $partGoods;
             $navigation['indexType'] = $tree;

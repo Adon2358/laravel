@@ -81,6 +81,7 @@
                 success: function(msg){
                     if(msg){
                         $("body").html(msg);
+                        // location.reload();
                     }else{
                         alert("状态修改失败");
                         location.href='goodslist';

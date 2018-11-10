@@ -52,8 +52,8 @@
 
 								<div>
 									<div class="xuangou_left fl">
-										<a href="">
-											<div class="img fl"><img src="{{URL::asset($value['t_img'])}}" alt=""></div>
+										<a href="{{$value['t_url']}}/t_id/{{$value['t_id']}}">
+											<div class="img fl"><img src="{{URL::asset($value['t_img'])}}" alt="" width="30px" height="30px"></div>
 											<span class="fl">{{$value['t_name']}}</span>
 											<div class="clear"></div>
 										</a>
@@ -61,7 +61,6 @@
 									<div class="xuangou_right fr"><a href="">选购</a></div>
 									<div class="clear"></div>
 								</div>
-
 							</div>
 							@endforeach
 							<div class="clear"></div>
@@ -102,7 +101,7 @@
 				@foreach($singleGoods as $k=>$va)
 				<div class="mingxing fl">
 					<div class="sub_mingxing"><a href=""><img src="{{URL::asset($va['goods_img'])}}" alt=""></a></div>
-					<div class="pinpai"><a href="">{{$va['goods_name']}}</a></div>
+					<div class="pinpai"><a href="">{{url($va['goods_name'])}}</a></div>
 					<div class="youhui">{{$va['yh']}}</div>
 					<div class="jiage">{{$va['goods_price']}}元起</div>
 				</div>
